@@ -4,30 +4,27 @@ using UnityEngine.InputSystem;
 public class CharcoUI : MonoBehaviour
 {
     [Header("Referencia al jugador")]
-    public Interaction playerInteraction; // asignar el script del jugador en el inspector
+    public Interaction playerInteraction;
 
     [Header("Número de pulsaciones requeridas")]
     public int requiredPresses = 10;
 
     private int currentPresses = 0;
+    private bool isMinigameActive = false;
 
     private void OnEnable()
     {
-        // Reiniciamos el contador cada vez que se abre la UI
         currentPresses = 0;
     }
 
     private void Update()
     {
-        // Escuchamos solo A o D
+        if (!isMinigameActive) return;
+
         if (Keyboard.current.aKey.wasPressedThisFrame || Keyboard.current.dKey.wasPressedThisFrame)
         {
             currentPresses++;
-
-            // Opcional: feedback visual o sonoro
-            Debug.Log($"Pulsaciones: {currentPresses}/{requiredPresses}");
-
-            // Cerramos la UI si se alcanza el número requerido
+            Debug.Log($"[CharcoUI] Pulsaciones: {currentPresses}/{requiredPresses}");
             if (currentPresses >= requiredPresses)
             {
                 CloseUI();
@@ -35,15 +32,31 @@ public class CharcoUI : MonoBehaviour
         }
     }
 
+    // Llamar desde Interaction.OpenUI()
+    public void StartMinigame()
+    {
+        Debug.Log("[CharcouI] Minijuego iniciado");
+        currentPresses = 0;
+        isMinigameActive = true;
+    }
+
+    // Llamar desde Interaction cuando se cierra otra UI
+    public void StopMinigame()
+    {
+        isMinigameActive = false;
+    }
+
     private void CloseUI()
     {
-        // Desactivar la UI
-        gameObject.SetActive(false);
-
-        // Reactivar el movimiento del jugador
         if (playerInteraction != null && playerInteraction.playerController != null)
-        {
             playerInteraction.playerController.enabled = true;
+
+        if (playerInteraction != null && playerInteraction.CurrentTarget != null)
+        {
+            Destroy(playerInteraction.CurrentTarget.gameObject);
+            playerInteraction.SetCurrentTarget(null);
         }
+
+        Destroy(gameObject);
     }
 }

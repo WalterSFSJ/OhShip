@@ -8,6 +8,13 @@ public class Interaction : MonoBehaviour
 
     private Interactable currentTarget;
 
+    public Interactable CurrentTarget => currentTarget;
+
+    public void SetCurrentTarget(Interactable target)
+    {
+        currentTarget = target;
+    }
+
     private void Update()
     {
         currentTarget = FindClosestInteractable();
@@ -44,21 +51,33 @@ public class Interaction : MonoBehaviour
     {
         if (target.uiPanel != null)
         {
-            // Desactivamos todas las otras UIs
+            Debug.Log($"[Interaction] Abriendo UI de {target.name}");
+
+            // Desactivamos otras UIs
             Interactable[] all = FindObjectsOfType<Interactable>();
             foreach (var obj in all)
+            {
                 if (obj.uiPanel != null && obj != target)
+                {
                     obj.uiPanel.SetActive(false);
+                    var otherChar = obj.uiPanel.GetComponent<CharcoUI>();
+                    if (otherChar != null) otherChar.StopMinigame();
+                }
+            }
 
-            // Activamos la UI del objeto actual
+            // Activamos la UI seleccionada
             target.uiPanel.SetActive(true);
 
-            // Bloqueamos movimiento del jugador
-            if (playerController != null)
-                playerController.enabled = false;
+            // Arrancamos minijuego si existe
+            var charUI = target.uiPanel.GetComponent<CharcoUI>();
+            if (charUI != null)
+            {
+                Debug.Log("[Interaction] StartMinigame() llamado");
+                charUI.playerInteraction = this;
+                charUI.StartMinigame();
+            }
 
-            // Si la UI es World Space, opcional: colocar sobre el jugador
-            target.uiPanel.transform.position = player.position + Vector3.up * 2f;
+            playerController.enabled = false;
         }
     }
 
@@ -67,11 +86,20 @@ public class Interaction : MonoBehaviour
     {
         if (target.uiPanel != null)
         {
-            target.uiPanel.SetActive(false);
-
-            // Reactivar movimiento
-            if (playerController != null)
-                playerController.enabled = true;
+            var charUI = target.uiPanel.GetComponentInChildren<CharcoUI>();
+            if (charUI != null)
+            {
+                charUI.StopMinigame();
+                Destroy(target.uiPanel);   // destruir en vez de SetActive(false)
+            }
+            else
+            {
+                Destroy(target.uiPanel);
+            }
         }
+
+        // Reactivar movimiento
+        if (playerController != null)
+            playerController.enabled = true;
     }
 }
