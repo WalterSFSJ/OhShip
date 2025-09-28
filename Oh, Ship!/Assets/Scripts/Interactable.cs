@@ -3,8 +3,8 @@ using UnityEngine;
 public class Interactable : MonoBehaviour
 {
     [Header("UI asociada")]
-    public GameObject uiPanel; // La UI que se abrirá al interactuar
+    public GameObject uiPanel; 
 
     [Header("Opcional")]
-    public float interactionRange = 2f; // Rango de interacción
+    public float interactionRange = 2f; 
 }

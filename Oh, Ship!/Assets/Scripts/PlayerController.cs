@@ -4,6 +4,9 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(CharacterController))]
 public class PlayerController : MonoBehaviour
 {
+
+    // ESTO ES TODO PROVISIONAL 
+
     [Header("Movimiento")]
     [SerializeField] private float speed = 5f;
     [SerializeField] private float rotationSpeed = 12f;

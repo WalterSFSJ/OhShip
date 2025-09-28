@@ -32,15 +32,12 @@ public class CharcoUI : MonoBehaviour
         }
     }
 
-    // Llamar desde Interaction.OpenUI()
     public void StartMinigame()
     {
-        Debug.Log("[CharcouI] Minijuego iniciado");
         currentPresses = 0;
         isMinigameActive = true;
     }
 
-    // Llamar desde Interaction cuando se cierra otra UI
     public void StopMinigame()
     {
         isMinigameActive = false;

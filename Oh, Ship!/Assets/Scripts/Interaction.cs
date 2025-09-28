@@ -4,7 +4,7 @@ using UnityEngine.InputSystem;
 public class Interaction : MonoBehaviour
 {
     [SerializeField] private Transform player;
-    [SerializeField] public PlayerController playerController; // script de movimiento del jugador
+    [SerializeField] public PlayerController playerController; 
 
     private Interactable currentTarget;
 
@@ -19,7 +19,6 @@ public class Interaction : MonoBehaviour
     {
         currentTarget = FindClosestInteractable();
 
-        // Solo abrimos la UI si hay un objeto cerca y la UI no está ya activa
         if (currentTarget != null
             && Keyboard.current.eKey.wasPressedThisFrame
             && !currentTarget.uiPanel.activeSelf)
@@ -51,9 +50,6 @@ public class Interaction : MonoBehaviour
     {
         if (target.uiPanel != null)
         {
-            Debug.Log($"[Interaction] Abriendo UI de {target.name}");
-
-            // Desactivamos otras UIs
             Interactable[] all = FindObjectsOfType<Interactable>();
             foreach (var obj in all)
             {
@@ -65,14 +61,11 @@ public class Interaction : MonoBehaviour
                 }
             }
 
-            // Activamos la UI seleccionada
             target.uiPanel.SetActive(true);
 
-            // Arrancamos minijuego si existe
             var charUI = target.uiPanel.GetComponent<CharcoUI>();
             if (charUI != null)
             {
-                Debug.Log("[Interaction] StartMinigame() llamado");
                 charUI.playerInteraction = this;
                 charUI.StartMinigame();
             }
@@ -81,7 +74,6 @@ public class Interaction : MonoBehaviour
         }
     }
 
-    // Método público para cerrar la UI desde un botón
     public void CloseUI(Interactable target)
     {
         if (target.uiPanel != null)
@@ -90,7 +82,7 @@ public class Interaction : MonoBehaviour
             if (charUI != null)
             {
                 charUI.StopMinigame();
-                Destroy(target.uiPanel);   // destruir en vez de SetActive(false)
+                Destroy(target.uiPanel);   
             }
             else
             {
@@ -98,7 +90,6 @@ public class Interaction : MonoBehaviour
             }
         }
 
-        // Reactivar movimiento
         if (playerController != null)
             playerController.enabled = true;
     }
