@@ -12,7 +12,6 @@ public class RedUI : MonoBehaviour
     private int currentPresses = 0;
     private bool isMinigameActive = false;
 
-    // Flags para llevar el seguimiento de cada tecla en el conjunto actual
     private bool wPressed, aPressed, sPressed, dPressed;
 
     private void OnEnable()
@@ -25,13 +24,11 @@ public class RedUI : MonoBehaviour
     {
         if (!isMinigameActive) return;
 
-        // Marcar cada tecla cuando se pulsa (solo en el frame de pulsación)
         if (Keyboard.current.wKey.wasPressedThisFrame) wPressed = true;
         if (Keyboard.current.aKey.wasPressedThisFrame) aPressed = true;
         if (Keyboard.current.sKey.wasPressedThisFrame) sPressed = true;
         if (Keyboard.current.dKey.wasPressedThisFrame) dPressed = true;
 
-        // Si se han pulsado las 4 teclas al menos una vez -> cuenta como 1 y resetea el conjunto
         if (wPressed && aPressed && sPressed && dPressed)
         {
             currentPresses++;

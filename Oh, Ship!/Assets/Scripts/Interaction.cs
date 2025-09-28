@@ -49,7 +49,6 @@ public class Interaction : MonoBehaviour
     {
         if (target.uiPanel != null)
         {
-            // Cierra otros UIs activos
             Interactable[] all = FindObjectsOfType<Interactable>();
             foreach (var obj in all)
             {
@@ -67,7 +66,6 @@ public class Interaction : MonoBehaviour
 
             target.uiPanel.SetActive(true);
 
-            // Soporte para CharcoUI
             var charUI = target.uiPanel.GetComponent<CharcoUI>();
             if (charUI != null)
             {
@@ -75,7 +73,6 @@ public class Interaction : MonoBehaviour
                 charUI.StartMinigame();
             }
 
-            // Soporte para RedUI
             var redUI = target.uiPanel.GetComponent<RedUI>();
             if (redUI != null)
             {
