@@ -19,6 +19,7 @@ public class Interaction : MonoBehaviour
         currentTarget = FindClosestInteractable();
 
         if (currentTarget != null
+            && currentTarget.canInteract 
             && Keyboard.current.eKey.wasPressedThisFrame
             && !currentTarget.uiPanel.activeSelf)
         {
@@ -92,22 +93,22 @@ public class Interaction : MonoBehaviour
             if (charUI != null)
             {
                 charUI.StopMinigame();
-                Destroy(target.uiPanel);
-                return;
+                target.uiPanel.SetActive(false); 
             }
 
             var redUI = target.uiPanel.GetComponentInChildren<RedUI>();
             if (redUI != null)
             {
                 redUI.StopMinigame();
-                Destroy(target.uiPanel);
-                return;
+                target.uiPanel.SetActive(false); 
             }
 
-            Destroy(target.uiPanel);
+            target.uiPanel.SetActive(false); 
         }
 
         if (playerController != null)
             playerController.enabled = true;
     }
 }
+
+
