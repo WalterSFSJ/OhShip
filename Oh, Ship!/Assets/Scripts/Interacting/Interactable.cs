@@ -12,14 +12,14 @@ public class Interactable : MonoBehaviour
     [Header("Estado de interacción")]
     public bool canInteract = true;
 
-    [Header("Prefabs que pueden aparecer en cooldown")]
-    public GameObject[] spawnPrefabs; // Arrastra aquí tus prefabs en el Inspector
+    [Header("Prefabs de peces que pueden aparecer en cooldown")]
+    public GameObject[] spawnPrefabs; // cada prefab debe tener Fish.cs con su fishID
 
     [Header("Referencia al jugador")]
-    public Transform player; // Arrastra aquí el Player en el Inspector
+    public Transform player; // arrastra aquí el Player en el Inspector
 
     [Header("Distancia de spawn respecto al jugador")]
-    public float spawnDistance = 0.5f; 
+    public float spawnDistance = 0.5f; // bien pegado delante
 
     /// <summary>
     /// Inicia el cooldown del interactuable
@@ -38,16 +38,20 @@ public class Interactable : MonoBehaviour
             int index = Random.Range(0, spawnPrefabs.Length);
             GameObject prefab = spawnPrefabs[index];
 
-            // Posición justo en frente del jugador
+            // posición en frente del jugador
             Vector3 spawnPos = player.position + player.forward * spawnDistance;
 
-            // Instanciamos el prefab
+            // instanciamos el pez
             GameObject instance = Instantiate(prefab, spawnPos, player.rotation);
 
-            // Lo hacemos hijo del jugador para que se mueva con él
+            // opcional: lo hacemos hijo del jugador para que aparezca pegado y siga su movimiento
             instance.transform.SetParent(player);
 
-            Debug.Log($"[Interactable] Spawned prefab {prefab.name} frente al jugador en {spawnPos}");
+            // aseguramos que tiene Fish.cs
+            if (instance.GetComponent<Fish>() == null)
+                instance.AddComponent<Fish>();
+
+            Debug.Log($"[Interactable] Pez {prefab.name} spawneado frente al jugador.");
         }
         else
         {
@@ -63,5 +67,6 @@ public class Interactable : MonoBehaviour
         Debug.Log($"[Interactable] Cooldown terminado. {gameObject.name} listo para interactuar otra vez.");
     }
 }
+
 
 

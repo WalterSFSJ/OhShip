@@ -6,8 +6,14 @@ public class Interaction : MonoBehaviour
     [SerializeField] private Transform player;
     [SerializeField] public PlayerController playerController;
 
+    [Header("Rangos")]
+    [SerializeField] private float pickupRadius = 1.5f;
+
     private Interactable currentTarget;
     public Interactable CurrentTarget => currentTarget;
+
+    private Fish carriedFish; // pez que llevamos
+    private bool eEnabled = true; // controla si E está activa
 
     public void SetCurrentTarget(Interactable target)
     {
@@ -16,14 +22,34 @@ public class Interaction : MonoBehaviour
 
     private void Update()
     {
+        // ---------- Si llevamos pez ----------
+        if (carriedFish != null)
+        {
+            return;
+        }
+
+        // ---------- Si NO llevamos pez ----------
         currentTarget = FindClosestInteractable();
 
-        if (currentTarget != null
-            && currentTarget.canInteract 
-            && Keyboard.current.eKey.wasPressedThisFrame
-            && !currentTarget.uiPanel.activeSelf)
+        if (Keyboard.current.eKey.wasPressedThisFrame && eEnabled)
         {
-            OpenUI(currentTarget);
+            // 1) Intentar recoger un pez cercano
+            Collider[] nearby = Physics.OverlapSphere(player.position, pickupRadius);
+            foreach (var hit in nearby)
+            {
+                Fish fish = hit.GetComponent<Fish>();
+                if (fish != null && !fish.isCarried)
+                {
+                    PickupFish(fish);
+                    return;
+                }
+            }
+
+            // 2) Si no hay pez, abrir la UI del interactable más cercano
+            if (currentTarget != null && currentTarget.canInteract && !currentTarget.uiPanel.activeSelf)
+            {
+                OpenUI(currentTarget);
+            }
         }
     }
 
@@ -36,7 +62,7 @@ public class Interaction : MonoBehaviour
         foreach (var obj in interactables)
         {
             float dist = Vector3.Distance(player.position, obj.transform.position);
-            if (dist < obj.interactionRange && dist < minDist)
+            if (dist < obj.interactionRange && dist < minDist && obj.canInteract)
             {
                 minDist = dist;
                 closest = obj;
@@ -50,6 +76,7 @@ public class Interaction : MonoBehaviour
     {
         if (target.uiPanel != null)
         {
+            // Cerrar otras UIs
             Interactable[] all = FindObjectsOfType<Interactable>();
             foreach (var obj in all)
             {
@@ -65,6 +92,7 @@ public class Interaction : MonoBehaviour
                 }
             }
 
+            // Abrir UI
             target.uiPanel.SetActive(true);
 
             var charUI = target.uiPanel.GetComponent<CharcoUI>();
@@ -81,7 +109,8 @@ public class Interaction : MonoBehaviour
                 redUI.StartMinigame();
             }
 
-            playerController.enabled = false;
+            if (playerController != null)
+                playerController.enabled = false;
         }
     }
 
@@ -93,22 +122,59 @@ public class Interaction : MonoBehaviour
             if (charUI != null)
             {
                 charUI.StopMinigame();
-                target.uiPanel.SetActive(false); 
+                target.uiPanel.SetActive(false);
+                if (playerController != null) playerController.enabled = true;
+                return;
             }
 
             var redUI = target.uiPanel.GetComponentInChildren<RedUI>();
             if (redUI != null)
             {
                 redUI.StopMinigame();
-                target.uiPanel.SetActive(false); 
+                target.uiPanel.SetActive(false);
+                if (playerController != null) playerController.enabled = true;
+                return;
             }
 
-            target.uiPanel.SetActive(false); 
+            target.uiPanel.SetActive(false);
         }
 
         if (playerController != null)
             playerController.enabled = true;
     }
+
+    // ------------------- Gestión de pez -------------------
+
+    private void PickupFish(Fish fish)
+    {
+        if (fish == null || fish.isCarried) return;
+
+        fish.PickUp(player);
+        carriedFish = fish;
+
+        DisableE(); 
+
+        Debug.Log($"[Interaction] Recogido pez {fish.name}. E deshabilitada.");
+    }
+
+    public void ClearCarriedFish() // llamado desde FishBox al entregar
+    {
+        carriedFish = null;
+        EnableE();
+    }
+
+    // ------------------- Habilitar / deshabilitar E -------------------
+    private void DisableE()
+    {
+        eEnabled = false;
+    }
+
+    private void EnableE()
+    {
+        eEnabled = true;
+    }
 }
+
+
 
 
