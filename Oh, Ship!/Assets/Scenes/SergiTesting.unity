@@ -725,6 +725,9 @@ MonoBehaviour:
   uiPanel: {fileID: 1678634198}
   interactionRange: 2
   canInteract: 1
+  spawnPrefabs: []
+  player: {fileID: 0}
+  spawnDistance: 2
 --- !u!65 &758901384
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1203,6 +1206,9 @@ MonoBehaviour:
   uiPanel: {fileID: 958176497}
   interactionRange: 2
   canInteract: 1
+  spawnPrefabs: []
+  player: {fileID: 0}
+  spawnDistance: 2
 --- !u!54 &1072959863
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1406,6 +1412,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c926db2033665f4f998bef23f3b418d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!4 &1476890392 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8203250778034862942, guid: 47056a02c3a15a445b826e1c0c920d27, type: 3}
+  m_PrefabInstance: {fileID: 4442960461524577382}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1678634198
 GameObject:
   m_ObjectHideFlags: 0
@@ -1747,10 +1758,50 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5527815673872117248, guid: 0c1dec07b167c50449bd30e98bfbe167, type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 1476890392}
+    - target: {fileID: 5527815673872117248, guid: 0c1dec07b167c50449bd30e98bfbe167, type: 3}
+      propertyPath: spawnDistance
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5527815673872117248, guid: 0c1dec07b167c50449bd30e98bfbe167, type: 3}
+      propertyPath: spawnPrefabs.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5527815673872117248, guid: 0c1dec07b167c50449bd30e98bfbe167, type: 3}
+      propertyPath: 'spawnPrefabs.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8477121893764020043, guid: ccef003383b3b5f469f8990d7454f1da, type: 3}
+    - target: {fileID: 5527815673872117248, guid: 0c1dec07b167c50449bd30e98bfbe167, type: 3}
+      propertyPath: 'spawnPrefabs.Array.data[1]'
+      value: 
+      objectReference: {fileID: 2656279019055650006, guid: 56d8336ed1487bb469d4536c3d31a455, type: 3}
+    - target: {fileID: 5527815673872117248, guid: 0c1dec07b167c50449bd30e98bfbe167, type: 3}
+      propertyPath: 'spawnPrefabs.Array.data[2]'
+      value: 
+      objectReference: {fileID: 6352806292750799640, guid: 7c173eccbd5fd40428b86a4f2384eba4, type: 3}
     - target: {fileID: 6938218627370475894, guid: 0c1dec07b167c50449bd30e98bfbe167, type: 3}
       propertyPath: playerInteraction
       value: 
       objectReference: {fileID: 1434388000}
+    - target: {fileID: 6938218627370475894, guid: 0c1dec07b167c50449bd30e98bfbe167, type: 3}
+      propertyPath: spawnPrefabs.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6938218627370475894, guid: 0c1dec07b167c50449bd30e98bfbe167, type: 3}
+      propertyPath: 'spawnPrefabs.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8477121893764020043, guid: ccef003383b3b5f469f8990d7454f1da, type: 3}
+    - target: {fileID: 6938218627370475894, guid: 0c1dec07b167c50449bd30e98bfbe167, type: 3}
+      propertyPath: 'spawnPrefabs.Array.data[1]'
+      value: 
+      objectReference: {fileID: 2656279019055650006, guid: 56d8336ed1487bb469d4536c3d31a455, type: 3}
+    - target: {fileID: 6938218627370475894, guid: 0c1dec07b167c50449bd30e98bfbe167, type: 3}
+      propertyPath: 'spawnPrefabs.Array.data[2]'
+      value: 
+      objectReference: {fileID: 6352806292750799640, guid: 7c173eccbd5fd40428b86a4f2384eba4, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
