@@ -890,7 +890,7 @@ MonoBehaviour:
   player: {fileID: 1476890392}
   spawnDistance: 0.5
   isDraggable: 1
-  dragSpeed: 5
+  dragSpeed: 3
   dragDistance: 2
 --- !u!136 &1688954527
 CapsuleCollider:

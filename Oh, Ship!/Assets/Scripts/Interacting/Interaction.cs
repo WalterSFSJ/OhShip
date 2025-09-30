@@ -20,7 +20,7 @@ public class Interaction : MonoBehaviour
     private Interactable draggedObject;
 
     [Header("Arrastre")]
-    [SerializeField] private float dragSpeedMultiplier = 0.1f; // % de velocidad al arrastrar
+    [SerializeField] private float dragSpeedMultiplier = 0.3f; // % de velocidad al arrastrar
     private float originalSpeed;
 
     public void SetCurrentTarget(Interactable target)
