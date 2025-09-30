@@ -3,7 +3,7 @@ using System.Collections;
 
 public class Interactable : MonoBehaviour
 {
-    [Header("UI asociada")]
+    [Header("UI asociada (solo si aplica)")]
     public GameObject uiPanel;
 
     [Header("Opcional")]
@@ -20,6 +20,11 @@ public class Interactable : MonoBehaviour
 
     [Header("Distancia de spawn respecto al jugador")]
     public float spawnDistance = 0.5f; // bien pegado delante
+
+    [Header("Arrastrable (sin UI)")]
+    public bool isDraggable = false;   // marcar en el Inspector si este objeto se puede arrastrar
+    public float dragSpeed = 2f;       // velocidad con la que se mueve al arrastrar
+    public float dragDistance = 1f;    // distancia delante del jugador donde se coloca
 
     /// <summary>
     /// Inicia el cooldown del interactuable
@@ -67,6 +72,7 @@ public class Interactable : MonoBehaviour
         Debug.Log($"[Interactable] Cooldown terminado. {gameObject.name} listo para interactuar otra vez.");
     }
 }
+
 
 
 

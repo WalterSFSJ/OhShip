@@ -78,12 +78,13 @@ public class RedUI : MonoBehaviour
                 interactable.StartCooldown(cooldownTime);
             }
 
-            playerInteraction.SetCurrentTarget(null);
+            playerInteraction.SetCurrentTarget(null); // restaurado en Interaction.cs
         }
 
         gameObject.SetActive(false);
     }
 }
+
 
 
 
