@@ -9,6 +9,9 @@ public class RedUI : MonoBehaviour
     [Header("Número de pulsaciones requeridas (conjuntos WASD)")]
     public int requiredPresses = 10;
 
+    [Header("Cooldown en segundos antes de volver a interactuar")]
+    public float cooldownTime = 5f;
+
     private int currentPresses = 0;
     private bool isMinigameActive = false;
 
@@ -66,10 +69,21 @@ public class RedUI : MonoBehaviour
 
         if (playerInteraction != null && playerInteraction.CurrentTarget != null)
         {
-            Destroy(playerInteraction.CurrentTarget.gameObject);
+            Interactable interactable = playerInteraction.CurrentTarget.GetComponent<Interactable>();
+            if (interactable != null)
+            {
+                if (interactable.uiPanel != null)
+                    interactable.uiPanel.SetActive(false);
+
+                interactable.StartCooldown(cooldownTime);
+            }
+
             playerInteraction.SetCurrentTarget(null);
         }
 
-        Destroy(gameObject);
+        gameObject.SetActive(false);
     }
 }
+
+
+
