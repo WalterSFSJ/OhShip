@@ -8,7 +8,7 @@ public class FishBox : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         Fish fish = other.GetComponent<Fish>();
-        if (fish != null && fish.isCarried) // solo si lo lleva el jugador
+        if (fish != null && fish.isCarried) 
         {
             if (fish.fishID == acceptedFishID)
             {
@@ -18,7 +18,7 @@ public class FishBox : MonoBehaviour
                 {
                     interaction.ClearCarriedFish();
                 }
-                Destroy(fish.gameObject); // eliminar pez
+                Destroy(fish.gameObject); 
             }
             else
             {

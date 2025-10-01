@@ -13,7 +13,7 @@ public class Fish : MonoBehaviour
         player = playerTransform;
         isCarried = true;
         transform.SetParent(player);
-        transform.localPosition = new Vector3(0, 0, 1f); // pegado delante del jugador
+        transform.localPosition = new Vector3(0, 0, 1f); 
     }
 
     public void Drop()

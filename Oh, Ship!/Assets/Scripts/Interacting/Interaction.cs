@@ -13,14 +13,13 @@ public class Interaction : MonoBehaviour
     private Interactable currentTarget;
     public Interactable CurrentTarget => currentTarget;
 
-    private Fish carriedFish; // pez que llevamos
-    private bool eEnabled = true; // controla si E está activa
+    private Fish carriedFish;
+    private bool eEnabled = true; 
 
-    // -------- Arrastrar objetos --------
     private Interactable draggedObject;
 
     [Header("Arrastre")]
-    [SerializeField] private float dragSpeedMultiplier = 0.3f; // % de velocidad al arrastrar
+    [SerializeField] private float dragSpeedMultiplier = 0.3f; 
     private float originalSpeed;
 
     public void SetCurrentTarget(Interactable target)
@@ -30,11 +29,9 @@ public class Interaction : MonoBehaviour
 
     private void Update()
     {
-        // ---------- Si llevamos pez ----------
         if (carriedFish != null)
             return;
 
-        // ---------- Si estamos arrastrando un objeto ----------
         if (draggedObject != null)
         {
             if (Keyboard.current.eKey.isPressed)
@@ -48,12 +45,10 @@ public class Interaction : MonoBehaviour
             return;
         }
 
-        // ---------- Si no llevamos pez ni arrastramos ----------
         currentTarget = FindClosestInteractable();
 
         if (Keyboard.current.eKey.wasPressedThisFrame && eEnabled)
         {
-            // 1) Intentar recoger un pez cercano
             Collider[] nearby = Physics.OverlapSphere(player.position, pickupRadius);
             foreach (var hit in nearby)
             {
@@ -65,14 +60,12 @@ public class Interaction : MonoBehaviour
                 }
             }
 
-            // 2) Si no hay pez, arrastrar objeto
             if (currentTarget != null && currentTarget.isDraggable)
             {
                 StartDragging(currentTarget);
                 return;
             }
 
-            // 3) Si no es arrastrable, abrir la UI
             if (currentTarget != null && currentTarget.canInteract && !currentTarget.uiPanel.activeSelf)
             {
                 OpenUI(currentTarget);
@@ -80,16 +73,14 @@ public class Interaction : MonoBehaviour
         }
     }
 
-    // ----------- Arrastrar objetos -----------
     private void StartDragging(Interactable target)
     {
         draggedObject = target;
 
         Rigidbody rb = draggedObject.GetComponent<Rigidbody>();
         if (rb != null)
-            rb.isKinematic = true; // desactivar física mientras lo llevamos
+            rb.isKinematic = true; 
 
-        // Reducir velocidad del jugador usando reflexión
         if (playerController != null)
         {
             FieldInfo speedField = typeof(PlayerController).GetField("speed", BindingFlags.NonPublic | BindingFlags.Instance);
@@ -116,9 +107,8 @@ public class Interaction : MonoBehaviour
 
         Rigidbody rb = draggedObject.GetComponent<Rigidbody>();
         if (rb != null)
-            rb.isKinematic = false; // reactivar física
+            rb.isKinematic = false; 
 
-        // Restaurar velocidad del jugador usando reflexión
         if (playerController != null)
         {
             FieldInfo speedField = typeof(PlayerController).GetField("speed", BindingFlags.NonPublic | BindingFlags.Instance);
@@ -131,7 +121,6 @@ public class Interaction : MonoBehaviour
         draggedObject = null;
     }
 
-    // ----------- Buscar interactuable más cercano -----------
     private Interactable FindClosestInteractable()
     {
         Interactable[] interactables = FindObjectsOfType<Interactable>();
@@ -151,12 +140,10 @@ public class Interaction : MonoBehaviour
         return closest;
     }
 
-    // ----------- Manejo de UIs -----------
     private void OpenUI(Interactable target)
     {
         if (target.uiPanel != null)
         {
-            // Cerrar otras UIs
             Interactable[] all = FindObjectsOfType<Interactable>();
             foreach (var obj in all)
             {
@@ -172,7 +159,6 @@ public class Interaction : MonoBehaviour
                 }
             }
 
-            // Abrir UI
             target.uiPanel.SetActive(true);
 
             var charUI = target.uiPanel.GetComponent<CharcoUI>();
@@ -220,10 +206,11 @@ public class Interaction : MonoBehaviour
         }
 
         if (playerController != null)
+        {
             playerController.enabled = true;
+        }   
     }
 
-    // ----------- Gestión de pez -----------
     private void PickupFish(Fish fish)
     {
         if (fish == null || fish.isCarried) return;
@@ -232,16 +219,14 @@ public class Interaction : MonoBehaviour
         carriedFish = fish;
 
         DisableE();
-        Debug.Log($"[Interaction] Recogido pez {fish.name}. E deshabilitada.");
     }
 
-    public void ClearCarriedFish() // llamado desde FishBox al entregar
+    public void ClearCarriedFish() 
     {
         carriedFish = null;
         EnableE();
     }
 
-    // ----------- Habilitar / deshabilitar E -----------
     private void DisableE()
     {
         eEnabled = false;

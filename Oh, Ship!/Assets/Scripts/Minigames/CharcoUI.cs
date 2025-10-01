@@ -46,18 +46,15 @@ public class CharcoUI : MonoBehaviour
 
     private void CloseUI()
     {
-        // Reactivar control del jugador
         if (playerInteraction != null && playerInteraction.playerController != null)
             playerInteraction.playerController.enabled = true;
 
         if (playerInteraction != null && playerInteraction.CurrentTarget != null)
         {
-            // Destruye el objeto interactuable (el charco)
             Destroy(playerInteraction.CurrentTarget.gameObject);
             playerInteraction.SetCurrentTarget(null);
         }
 
-        // Destruye el propio UI
         Destroy(gameObject);
     }
 }
