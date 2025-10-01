@@ -25,6 +25,7 @@ public class CharcoUI : MonoBehaviour
         {
             currentPresses++;
             Debug.Log($"[CharcoUI] Pulsaciones: {currentPresses}/{requiredPresses}");
+
             if (currentPresses >= requiredPresses)
             {
                 CloseUI();
@@ -57,3 +58,4 @@ public class CharcoUI : MonoBehaviour
         Destroy(gameObject);
     }
 }
+
