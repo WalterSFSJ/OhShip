@@ -1,6 +1,7 @@
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using System.Collections;
 using System.Collections.Generic;
 
 public class GraphicsSettings : MonoBehaviour
@@ -112,7 +113,7 @@ public class GraphicsSettings : MonoBehaviour
         if (savedResolutionIndex != -1 && savedResolutionIndex < resolutionOptions.Count)
         {
             currentResolutionIndex = savedResolutionIndex;
-            ApplyResolution(currentResolutionIndex);
+            StartCoroutine(ApplyResolutionNextFrame(currentResolutionIndex));
         }
 
         resolutionDropdown.value = currentResolutionIndex;
@@ -122,20 +123,29 @@ public class GraphicsSettings : MonoBehaviour
 
     public void SetResolution(int index)
     {
-        ApplyResolution(index);
+        StartCoroutine(ApplyResolutionNextFrame(index));
         PlayerPrefs.SetInt(PREF_RESOLUTION, index);
         PlayerPrefs.Save();
     }
 
-    private void ApplyResolution(int index)
+    private IEnumerator ApplyResolutionNextFrame(int index)
     {
+        yield return null; // esperar un frame
+
         string[] dims = resolutionDropdown.options[index].text.Split('x');
         int width = int.Parse(dims[0]);
         int height = int.Parse(dims[1]);
 
         // Evitar congelación: no reaplicar si ya está en esa resolución
         if (Screen.width == width && Screen.height == height)
-            return;
+            yield break;
+
+        // Si estamos en Exclusive, pasar primero a ventana para evitar cuelgue
+        if (Screen.fullScreenMode == FullScreenMode.ExclusiveFullScreen)
+        {
+            Screen.fullScreenMode = FullScreenMode.Windowed;
+            yield return null; // esperar un frame antes de aplicar
+        }
 
         Screen.SetResolution(width, height, Screen.fullScreenMode);
     }
