@@ -1,6 +1,7 @@
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using System.Collections.Generic;
 
 public class GraphicsSettings : MonoBehaviour
 {
@@ -17,6 +18,7 @@ public class GraphicsSettings : MonoBehaviour
     private const string PREF_BRIGHTNESS = "Brightness";
 
     private Resolution[] resolutions;
+    private List<string> resolutionOptions = new List<string>();
 
     void Start()
     {
@@ -32,7 +34,7 @@ public class GraphicsSettings : MonoBehaviour
     void SetupScreenModeDropdown()
     {
         screenModeDropdown.ClearOptions();
-        screenModeDropdown.AddOptions(new System.Collections.Generic.List<string>
+        screenModeDropdown.AddOptions(new List<string>
         {
             "Window",
             "Full Screen"
@@ -84,30 +86,30 @@ public class GraphicsSettings : MonoBehaviour
     void SetupResolutionDropdown()
     {
         resolutionDropdown.ClearOptions();
-
         resolutions = Screen.resolutions;
-        var options = new System.Collections.Generic.List<string>();
+        resolutionOptions.Clear();
+
         int currentResolutionIndex = 0;
 
         for (int i = 0; i < resolutions.Length; i++)
         {
             string option = resolutions[i].width + " x " + resolutions[i].height;
-            if (!options.Contains(option)) // evitar duplicados
+            if (!resolutionOptions.Contains(option)) // evitar duplicados
             {
-                options.Add(option);
+                resolutionOptions.Add(option);
             }
 
             if (resolutions[i].width == Screen.currentResolution.width &&
                 resolutions[i].height == Screen.currentResolution.height)
             {
-                currentResolutionIndex = options.IndexOf(option);
+                currentResolutionIndex = resolutionOptions.IndexOf(option);
             }
         }
 
-        resolutionDropdown.AddOptions(options);
+        resolutionDropdown.AddOptions(resolutionOptions);
 
         int savedResolutionIndex = PlayerPrefs.GetInt(PREF_RESOLUTION, -1);
-        if (savedResolutionIndex != -1 && savedResolutionIndex < options.Count)
+        if (savedResolutionIndex != -1 && savedResolutionIndex < resolutionOptions.Count)
         {
             currentResolutionIndex = savedResolutionIndex;
             ApplyResolution(currentResolutionIndex);
@@ -131,7 +133,7 @@ public class GraphicsSettings : MonoBehaviour
         int width = int.Parse(dims[0]);
         int height = int.Parse(dims[1]);
 
-        // Evitar re-aplicar la misma resolución
+        // Evitar congelación: no reaplicar si ya está en esa resolución
         if (Screen.width == width && Screen.height == height)
             return;
 
@@ -185,7 +187,6 @@ public class GraphicsSettings : MonoBehaviour
         }
         else
         {
-            // Mitad del slider por defecto
             brightnessSlider.value = 0.5f;
             ApplyBrightness(0.5f);
         }
@@ -202,11 +203,10 @@ public class GraphicsSettings : MonoBehaviour
 
     private void ApplyBrightness(float value)
     {
-        // value: 0 = oscuro, 1 = claro
         if (brightnessOverlay != null)
         {
             Color c = brightnessOverlay.color;
-            c.a = 1f - value; // invertir (slider 1 = overlay invisible, slider 0 = overlay negro)
+            c.a = 1f - value; // 1 = claro, 0 = oscuro
             brightnessOverlay.color = c;
         }
     }
