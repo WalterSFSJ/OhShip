@@ -34,9 +34,8 @@ public class GraphicsSettings : MonoBehaviour
         screenModeDropdown.ClearOptions();
         screenModeDropdown.AddOptions(new System.Collections.Generic.List<string>
         {
-            "Full Screen",
             "Window",
-            "Screen with borders"
+            "Full Screen"
         });
 
         int savedMode = PlayerPrefs.GetInt(PREF_SCREEN_MODE, -1);
@@ -131,6 +130,10 @@ public class GraphicsSettings : MonoBehaviour
         string[] dims = resolutionDropdown.options[index].text.Split('x');
         int width = int.Parse(dims[0]);
         int height = int.Parse(dims[1]);
+
+        // Evitar re-aplicar la misma resolución
+        if (Screen.width == width && Screen.height == height)
+            return;
 
         Screen.SetResolution(width, height, Screen.fullScreenMode);
     }
