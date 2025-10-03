@@ -26,11 +26,9 @@ public class SettingsMenu : MonoBehaviour
     {
         if (index < 0 || index >= pages.Length) return;
 
-        // Desactivar todos
         foreach (var page in pages)
             page.content.SetActive(false);
 
-        // Activar la seleccionada
         pages[index].content.SetActive(true);
         titleText.text = pages[index].title;
         currentPage = index;

@@ -29,9 +29,6 @@ public class GraphicsSettings : MonoBehaviour
         SetupBrightnessSlider();
     }
 
-    // ======================
-    //  SCREEN MODE
-    // ======================
     void SetupScreenModeDropdown()
     {
         screenModeDropdown.ClearOptions();
@@ -81,9 +78,6 @@ public class GraphicsSettings : MonoBehaviour
         }
     }
 
-    // ======================
-    //  RESOLUTIONS
-    // ======================
     void SetupResolutionDropdown()
     {
         resolutionDropdown.ClearOptions();
@@ -95,7 +89,7 @@ public class GraphicsSettings : MonoBehaviour
         for (int i = 0; i < resolutions.Length; i++)
         {
             string option = resolutions[i].width + " x " + resolutions[i].height;
-            if (!resolutionOptions.Contains(option)) // evitar duplicados
+            if (!resolutionOptions.Contains(option)) 
             {
                 resolutionOptions.Add(option);
             }
@@ -130,29 +124,24 @@ public class GraphicsSettings : MonoBehaviour
 
     private IEnumerator ApplyResolutionNextFrame(int index)
     {
-        yield return null; // esperar un frame
+        yield return null; 
 
         string[] dims = resolutionDropdown.options[index].text.Split('x');
         int width = int.Parse(dims[0]);
         int height = int.Parse(dims[1]);
 
-        // Evitar congelación: no reaplicar si ya está en esa resolución
         if (Screen.width == width && Screen.height == height)
             yield break;
 
-        // Si estamos en Exclusive, pasar primero a ventana para evitar cuelgue
         if (Screen.fullScreenMode == FullScreenMode.ExclusiveFullScreen)
         {
             Screen.fullScreenMode = FullScreenMode.Windowed;
-            yield return null; // esperar un frame antes de aplicar
+            yield return null; 
         }
 
         Screen.SetResolution(width, height, Screen.fullScreenMode);
     }
 
-    // ======================
-    //  V-SYNC
-    // ======================
     void SetupVSyncToggle()
     {
         int savedVSync = PlayerPrefs.GetInt(PREF_VSYNC, -1);
@@ -183,9 +172,6 @@ public class GraphicsSettings : MonoBehaviour
         QualitySettings.vSyncCount = enabled ? 1 : 0;
     }
 
-    // ======================
-    //  BRIGHTNESS
-    // ======================
     void SetupBrightnessSlider()
     {
         float savedBrightness = PlayerPrefs.GetFloat(PREF_BRIGHTNESS, -1);
@@ -216,7 +202,7 @@ public class GraphicsSettings : MonoBehaviour
         if (brightnessOverlay != null)
         {
             Color c = brightnessOverlay.color;
-            c.a = 1f - value; // 1 = claro, 0 = oscuro
+            c.a = 1f - value; 
             brightnessOverlay.color = c;
         }
     }
