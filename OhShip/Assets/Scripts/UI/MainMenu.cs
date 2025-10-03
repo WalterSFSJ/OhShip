@@ -7,7 +7,7 @@ public class MainMenu : MonoBehaviour
     public GameObject settings;
     public void Play()
     {
-        SceneManager.LoadScene("SergiTesting");
+        SceneManager.LoadScene(1);
     }
 
     public void Settings()

@@ -1,11 +1,13 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class Timer : MonoBehaviour
 {
     public float timeInitial = 300f;
     private float timeLeft;
+    public Image circle;
 
     public TMP_Text timerText;
 
@@ -24,11 +26,23 @@ public class Timer : MonoBehaviour
             {
                 timeLeft -= Time.deltaTime;
                 ShowTime(timeLeft);
+
+                circle.fillAmount = timeLeft / timeInitial;
+
+                if (timeLeft < timeInitial / 3) 
+                {
+                    circle.color = Color.red;
+                }
+                else if (timeLeft < (timeInitial / 3) * 2) 
+                {
+                    circle.color = Color.yellow;
+                }
             }
             else
             {
                 timeLeft = 0;
                 on = false;
+                SceneManager.LoadScene("GameOver");
             }
         }
     }
