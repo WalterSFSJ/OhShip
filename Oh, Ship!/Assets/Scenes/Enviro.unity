@@ -669,7 +669,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 40baab9b3f9fe2d478ac830ca8e62b8a, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -13.03
+      value: -10.81
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 40baab9b3f9fe2d478ac830ca8e62b8a, type: 3}
       propertyPath: m_LocalPosition.y
@@ -677,23 +677,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 40baab9b3f9fe2d478ac830ca8e62b8a, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -3.88
+      value: -4.79
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 40baab9b3f9fe2d478ac830ca8e62b8a, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0.21077578
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 40baab9b3f9fe2d478ac830ca8e62b8a, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 40baab9b3f9fe2d478ac830ca8e62b8a, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: 0.9775345
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 40baab9b3f9fe2d478ac830ca8e62b8a, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 40baab9b3f9fe2d478ac830ca8e62b8a, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -701,20 +701,48 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 40baab9b3f9fe2d478ac830ca8e62b8a, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
+      value: 155.664
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 40baab9b3f9fe2d478ac830ca8e62b8a, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -4196013023752696869, guid: 40baab9b3f9fe2d478ac830ca8e62b8a, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 85f8d4e557769924f899d63bb9ab849d, type: 2}
+    - target: {fileID: -618168047299610662, guid: 40baab9b3f9fe2d478ac830ca8e62b8a, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 85f8d4e557769924f899d63bb9ab849d, type: 2}
     - target: {fileID: 919132149155446097, guid: 40baab9b3f9fe2d478ac830ca8e62b8a, type: 3}
       propertyPath: m_Name
       value: Idle
       objectReference: {fileID: 0}
+    - target: {fileID: 5233200294218288004, guid: 40baab9b3f9fe2d478ac830ca8e62b8a, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 85f8d4e557769924f899d63bb9ab849d, type: 2}
     - target: {fileID: 5866666021909216657, guid: 40baab9b3f9fe2d478ac830ca8e62b8a, type: 3}
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: 44420d7fdc691304e960fe60944d0fb7, type: 2}
+    - target: {fileID: 5866666021909216657, guid: 40baab9b3f9fe2d478ac830ca8e62b8a, type: 3}
+      propertyPath: m_WarningMessage
+      value: "\nBinding warning: Some generic clip(s) animate transforms that are
+        already bound by a Humanoid avatar. These transforms can only be changed
+        by Humanoid clips.\n\tTransform 'mixamorig:Hips'\n\tTransform 'mixamorig:LeftFoot'\n\tTransform
+        'mixamorig:LeftHandThumb2'\n\tTransform 'mixamorig:LeftHandIndex1'\n\tTransform
+        'mixamorig:Spine1'\n\tTransform 'mixamorig:LeftToeBase'\n\tTransform 'mixamorig:LeftHandThumb3'\n\tTransform
+        'mixamorig:RightArm'\n\tTransform 'mixamorig:LeftLeg'\n\tTransform 'mixamorig:LeftShoulder'\n\tand
+        more ...\n\tFrom animation clip 'Running'\n\tFrom animation clip 'FallBack'\n\tFrom
+        animation clip 'MovePulley'\n\tFrom animation clip 'PullHeavyObject'\n\tFrom
+        animation clip 'WorkingOnDevicce'"
+      objectReference: {fileID: 0}
+    - target: {fileID: 8450560953775929927, guid: 40baab9b3f9fe2d478ac830ca8e62b8a, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 85f8d4e557769924f899d63bb9ab849d, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
