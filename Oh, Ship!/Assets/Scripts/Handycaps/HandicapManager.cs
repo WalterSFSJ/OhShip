@@ -5,7 +5,7 @@ using System.Collections;
 public class HandicapManager : MonoBehaviour
 {
     [Header("Configuración general")]
-    public float totalDuration = 20f; // Duración total de la ronda o del evento
+    public float totalDuration = 20f; 
 
     public static event Action OnStartHandicap;
     public static event Action OnMidHandicap;
@@ -20,17 +20,14 @@ public class HandicapManager : MonoBehaviour
     {
         float halfTime = totalDuration / 2f;
 
-        // Inicio
         OnStartHandicap?.Invoke();
 
         yield return new WaitForSeconds(halfTime);
 
-        // Mitad del tiempo
         OnMidHandicap?.Invoke();
 
         yield return new WaitForSeconds(halfTime);
 
-        // Fin del handicap
         OnEndHandicap?.Invoke();
     }
 }

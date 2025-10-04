@@ -10,7 +10,7 @@ public class Handicap_SideObjects : MonoBehaviour
     public float offscreenDistance = 10f;
 
     [Header("Posición Y")]
-    public float yOffset = -2f; // Desplazamiento vertical hacia abajo
+    public float yOffset = -2f; 
 
     void OnEnable()
     {
@@ -39,22 +39,19 @@ public class Handicap_SideObjects : MonoBehaviour
         {
             if (sideObjects[i] == null) continue;
 
-            // Si hay exactamente 2 objetos: uno izquierda y otro derecha
             bool fromLeft;
             if (sideObjects.Length == 2)
-                fromLeft = (i == 0); // el primero por la izquierda, el segundo por la derecha
+                fromLeft = (i == 0); 
             else
                 fromLeft = Random.value > 0.5f;
 
             float startX = fromLeft ? -width / 2f - offscreenDistance : width / 2f + offscreenDistance;
 
-            // Ajuste en el eje Y
             float yPos = Random.Range(-height / 2f, height / 2f) + yOffset;
 
             Vector3 spawnPos = cam.transform.position + new Vector3(startX, yPos, 10f);
             GameObject obj = Instantiate(sideObjects[i], spawnPos, Quaternion.identity);
 
-            // Apunta hacia una zona aleatoria del centro
             Vector3 target = cam.transform.position + new Vector3(Random.Range(-width / 4f, width / 4f), yOffset, 10f);
 
             StartCoroutine(MoveObject(obj, target));
