@@ -5,6 +5,7 @@ public class MainMenu : MonoBehaviour
 {
     public GameObject mainMenu;
     public GameObject settings;
+    public GameObject customization;
     public void Play()
     {
         SceneManager.LoadScene(1);
@@ -19,5 +20,11 @@ public class MainMenu : MonoBehaviour
     public void Exit()
     {
         Application.Quit();
+    }
+
+    public void Customization()
+    {
+        mainMenu.SetActive(false);
+        customization.SetActive(true);
     }
 }
