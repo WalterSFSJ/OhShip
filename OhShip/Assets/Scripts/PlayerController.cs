@@ -30,6 +30,10 @@ public class PlayerController : MonoBehaviour
         moveInput = context.ReadValue<Vector2>();
     }
 
+    public float GetX() {
+        return moveInput.x;
+    }
+
     private void Update()
     {
         // Leemos WASD mediante Keyboard.current
