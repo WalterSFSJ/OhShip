@@ -18,9 +18,16 @@ public class PlayerController : MonoBehaviour
     private CharacterController controller;
     private Vector3 verticalVelocity;
 
+    private Vector2 moveInput; //W
+
     private void Awake()
     {
         controller = GetComponent<CharacterController>();
+    }
+
+    public void Move(InputAction.CallbackContext context)
+    {
+        moveInput = context.ReadValue<Vector2>();
     }
 
     private void Update()
@@ -29,14 +36,15 @@ public class PlayerController : MonoBehaviour
         float forward = 0f;
         float right = 0f;
 
-        if (Keyboard.current.wKey.isPressed) forward += 1f;
-        if (Keyboard.current.sKey.isPressed) forward -= 1f;
-        if (Keyboard.current.dKey.isPressed) right += 1f;
-        if (Keyboard.current.aKey.isPressed) right -= 1f;
+        //if (Keyboard.current.wKey.isPressed) forward += 1f; //W
+        //if (Keyboard.current.sKey.isPressed) forward -= 1f; //W
+        //if (Keyboard.current.dKey.isPressed) right += 1f; //W
+        //if (Keyboard.current.aKey.isPressed) right -= 1f; //W
 
-        Vector3 move;
+        Vector3 move = new Vector3(moveInput.x, 0, moveInput.y); //W
+        controller.Move(move * speed * Time.deltaTime); //W
 
-        if (cameraTransform != null)
+        /*if (cameraTransform != null)
         {
             Vector3 camForward = cameraTransform.forward;
             camForward.y = 0f;
@@ -61,7 +69,7 @@ public class PlayerController : MonoBehaviour
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRot, rotationSpeed * Time.deltaTime);
 
             controller.Move(move * Time.deltaTime);
-        }
+        }*/
 
         // Gravedad
         if (!controller.isGrounded)
