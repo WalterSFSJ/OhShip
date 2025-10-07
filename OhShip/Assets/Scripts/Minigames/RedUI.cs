@@ -16,6 +16,7 @@ public class RedUI : MonoBehaviour
     private bool isMinigameActive = false;
 
     private bool wPressed, aPressed, sPressed, dPressed;
+    private PlayerController pc;
 
     private void OnEnable()
     {
@@ -23,14 +24,18 @@ public class RedUI : MonoBehaviour
         currentPresses = 0;
     }
 
+    private void Start()
+    {
+        pc = playerInteraction.gameObject.GetComponent<PlayerController>();
+    }
     private void Update()
     {
         if (!isMinigameActive) return;
 
-        if (Keyboard.current.wKey.wasPressedThisFrame) wPressed = true;
-        if (Keyboard.current.aKey.wasPressedThisFrame) aPressed = true;
-        if (Keyboard.current.sKey.wasPressedThisFrame) sPressed = true;
-        if (Keyboard.current.dKey.wasPressedThisFrame) dPressed = true;
+        if (pc.GetY() > 0) wPressed = true;
+        if (pc.GetX() < 0) aPressed = true;
+        if (pc.GetY() < 0) sPressed = true;
+        if (pc.GetX() > 0) dPressed = true;
 
         if (wPressed && aPressed && sPressed && dPressed)
         {

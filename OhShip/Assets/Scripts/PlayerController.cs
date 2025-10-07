@@ -33,6 +33,9 @@ public class PlayerController : MonoBehaviour
     public float GetX() {
         return moveInput.x;
     }
+    public float GetY() {
+        return moveInput.y;
+    }
 
     private void Update()
     {
