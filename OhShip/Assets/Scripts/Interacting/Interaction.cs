@@ -22,6 +22,14 @@ public class Interaction : MonoBehaviour
     [SerializeField] private float dragSpeedMultiplier = 0.3f; 
     private float originalSpeed;
 
+
+    private PlayerController pc;
+
+    private void Start()
+    {
+        pc = gameObject.GetComponent<PlayerController>();
+    }
+
     public void SetCurrentTarget(Interactable target)
     {
         currentTarget = target;
@@ -47,7 +55,7 @@ public class Interaction : MonoBehaviour
 
         currentTarget = FindClosestInteractable();
 
-        if (Keyboard.current.eKey.wasPressedThisFrame && eEnabled)
+        if (pc.GetInteracted() && eEnabled)
         {
             Collider[] nearby = Physics.OverlapSphere(player.position, pickupRadius);
             foreach (var hit in nearby)

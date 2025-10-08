@@ -1,5 +1,7 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(CharacterController))]
 public class PlayerController : MonoBehaviour
@@ -19,6 +21,7 @@ public class PlayerController : MonoBehaviour
     private Vector3 verticalVelocity;
 
     private Vector2 moveInput; //W
+    private bool interacted; //W
 
     private void Awake()
     {
@@ -30,6 +33,14 @@ public class PlayerController : MonoBehaviour
         moveInput = context.ReadValue<Vector2>();
     }
 
+    public void Interacted(InputAction.CallbackContext context)
+    {
+        interacted = context.performed;
+    }
+
+    public bool GetInteracted() {
+        return interacted;
+    }
     public float GetX() {
         return moveInput.x;
     }
