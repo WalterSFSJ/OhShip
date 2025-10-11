@@ -24,9 +24,9 @@ public class RedUI : MonoBehaviour
         currentPresses = 0;
     }
 
-    public void Initialize(Interaction interaction)
+    public void Initialize(GameObject interactionGO)
     {
-        playerInteraction = interaction;
+        playerInteraction = interactionGO.GetComponent<Interaction>();
 
         if (playerInteraction != null)
         {
@@ -38,6 +38,7 @@ public class RedUI : MonoBehaviour
         ResetSet();
         isMinigameActive = true;
         gameObject.SetActive(true);
+        Debug.Log(interactionGO.name);
     }
 
     public void StartMinigame()
@@ -107,6 +108,8 @@ public class RedUI : MonoBehaviour
         }
 
         isMinigameActive = false;
+        playerInteraction = null;
+        pc = null;
         gameObject.SetActive(false);
     }
 }

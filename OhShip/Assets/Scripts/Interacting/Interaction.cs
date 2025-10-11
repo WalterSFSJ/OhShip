@@ -55,7 +55,7 @@ public class Interaction : MonoBehaviour
 
         currentTarget = FindClosestInteractable();
 
-        if (playerController != null && playerController.GetInteracted() && eEnabled)
+        if (playerController != null && playerController.GetInteracted())
         {
             Collider[] nearby = Physics.OverlapSphere(player.position, pickupRadius);
             foreach (var hit in nearby)
@@ -67,7 +67,7 @@ public class Interaction : MonoBehaviour
                     return;
                 }
             }
-
+            
             if (currentTarget != null && currentTarget.isDraggable)
             {
                 StartDragging(currentTarget);
@@ -184,7 +184,7 @@ public class Interaction : MonoBehaviour
             var redUI = target.uiPanel.GetComponent<RedUI>();
             if (redUI != null)
             {
-                redUI.Initialize(this);
+                redUI.Initialize(this.gameObject);
             }
 
             if (playerController != null)

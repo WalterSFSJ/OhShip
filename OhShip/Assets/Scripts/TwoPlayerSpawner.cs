@@ -12,12 +12,16 @@ public class TwoPlayerSpawner : MonoBehaviour
                 controlScheme: "Keyboard&Mouse",
                 pairWithDevice: Keyboard.current);
 
+        player1.name = "WASD";
+
         player1.transform.position = spawnPoints[0].position;
 
         var player2 = PlayerInput.Instantiate(playerPrefab,
                 controlScheme: "Arrows",
                 pairWithDevice: Keyboard.current);
 
+        player2.name = "arrows";
+        
         player2.transform.position = spawnPoints[1].position;
     }
 }
