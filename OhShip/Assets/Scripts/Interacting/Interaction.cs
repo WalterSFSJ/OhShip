@@ -42,11 +42,11 @@ public class Interaction : MonoBehaviour
 
         if (draggedObject != null)
         {
-            if (Keyboard.current.eKey.isPressed)
+            if (playerController.GetInteracted())
             {
                 DragObject(draggedObject);
             }
-            else if (Keyboard.current.eKey.wasReleasedThisFrame)
+            else if (!playerController.GetInteracted())
             {
                 ReleaseDraggedObject();
             }
