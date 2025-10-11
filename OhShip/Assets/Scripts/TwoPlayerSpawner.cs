@@ -18,7 +18,7 @@ public class TwoPlayerSpawner : MonoBehaviour
                 controlScheme: "Arrows",
                 pairWithDevice: Keyboard.current);
 
-        player1.transform.position = spawnPoints[1].position;
+        player2.transform.position = spawnPoints[1].position;
     }
-
 }
+

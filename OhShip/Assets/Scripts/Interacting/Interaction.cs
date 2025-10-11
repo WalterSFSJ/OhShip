@@ -5,29 +5,30 @@ using System.Reflection;
 public class Interaction : MonoBehaviour
 {
     [SerializeField] private Transform player;
-    [SerializeField] public PlayerController playerController;
+    public Transform PlayerTransform => player; 
 
     [Header("Rangos")]
     [SerializeField] private float pickupRadius = 1.5f;
 
-    private Interactable currentTarget;
+    public Interactable currentTarget;
     public Interactable CurrentTarget => currentTarget;
 
     private Fish carriedFish;
-    private bool eEnabled = true; 
+    private bool eEnabled = true;
 
     private Interactable draggedObject;
 
     [Header("Arrastre")]
-    [SerializeField] private float dragSpeedMultiplier = 0.3f; 
+    [SerializeField] private float dragSpeedMultiplier = 0.3f;
     private float originalSpeed;
 
-
-    private PlayerController pc;
+    [Header("Referencia al PlayerController")]
+    public PlayerController playerController;
 
     private void Start()
     {
-        pc = gameObject.GetComponent<PlayerController>();
+        if (playerController == null)
+            playerController = GetComponent<PlayerController>();
     }
 
     public void SetCurrentTarget(Interactable target)
@@ -37,8 +38,7 @@ public class Interaction : MonoBehaviour
 
     private void Update()
     {
-        if (carriedFish != null)
-            return;
+        if (carriedFish != null) return;
 
         if (draggedObject != null)
         {
@@ -55,7 +55,7 @@ public class Interaction : MonoBehaviour
 
         currentTarget = FindClosestInteractable();
 
-        if (pc.GetInteracted() && eEnabled)
+        if (playerController != null && playerController.GetInteracted() && eEnabled)
         {
             Collider[] nearby = Physics.OverlapSphere(player.position, pickupRadius);
             foreach (var hit in nearby)
@@ -87,7 +87,7 @@ public class Interaction : MonoBehaviour
 
         Rigidbody rb = draggedObject.GetComponent<Rigidbody>();
         if (rb != null)
-            rb.isKinematic = true; 
+            rb.isKinematic = true;
 
         if (playerController != null)
         {
@@ -115,7 +115,7 @@ public class Interaction : MonoBehaviour
 
         Rigidbody rb = draggedObject.GetComponent<Rigidbody>();
         if (rb != null)
-            rb.isKinematic = false; 
+            rb.isKinematic = false;
 
         if (playerController != null)
         {
@@ -155,14 +155,19 @@ public class Interaction : MonoBehaviour
             Interactable[] all = FindObjectsOfType<Interactable>();
             foreach (var obj in all)
             {
-                if (obj.uiPanel != null && obj != target)
+                if (obj == target || obj.uiPanel == null) continue;
+
+                var otherChar = obj.uiPanel.GetComponent<CharcoUI>();
+                var otherRed = obj.uiPanel.GetComponent<RedUI>();
+
+                bool samePlayer =
+                    (otherChar != null && otherChar.playerInteraction == this) ||
+                    (otherRed != null && otherRed.playerInteraction == this);
+
+                if (samePlayer)
                 {
                     obj.uiPanel.SetActive(false);
-
-                    var otherChar = obj.uiPanel.GetComponent<CharcoUI>();
                     if (otherChar != null) otherChar.StopMinigame();
-
-                    var otherRed = obj.uiPanel.GetComponent<RedUI>();
                     if (otherRed != null) otherRed.StopMinigame();
                 }
             }
@@ -179,8 +184,7 @@ public class Interaction : MonoBehaviour
             var redUI = target.uiPanel.GetComponent<RedUI>();
             if (redUI != null)
             {
-                redUI.playerInteraction = this;
-                redUI.StartMinigame();
+                redUI.Initialize(this);
             }
 
             if (playerController != null)
@@ -216,7 +220,7 @@ public class Interaction : MonoBehaviour
         if (playerController != null)
         {
             playerController.enabled = true;
-        }   
+        }
     }
 
     private void PickupFish(Fish fish)
@@ -229,20 +233,15 @@ public class Interaction : MonoBehaviour
         DisableE();
     }
 
-    public void ClearCarriedFish() 
+    public void ClearCarriedFish()
     {
         carriedFish = null;
         EnableE();
     }
 
-    private void DisableE()
-    {
-        eEnabled = false;
-    }
-
-    private void EnableE()
-    {
-        eEnabled = true;
-    }
+    private void DisableE() => eEnabled = false;
+    private void EnableE() => eEnabled = true;
 }
+
+
 

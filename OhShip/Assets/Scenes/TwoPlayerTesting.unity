@@ -860,7 +860,6 @@ MonoBehaviour:
   interactionRange: 2
   canInteract: 1
   spawnPrefabs: []
-  player: {fileID: 0}
   spawnDistance: 0.5
   isDraggable: 1
   dragSpeed: 3

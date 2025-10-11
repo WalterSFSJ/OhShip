@@ -12,30 +12,31 @@ public class CharcoUI : MonoBehaviour
     private int currentPresses = 0;
     private bool isMinigameActive = false;
 
-
     private bool turned = false;
     private PlayerController pc;
+
     private void OnEnable()
     {
-        currentPresses = 0;        
+        currentPresses = 0;
     }
+
     private void Start()
     {
         pc = playerInteraction.gameObject.GetComponent<PlayerController>();
     }
+
     private void Update()
     {
         if (!isMinigameActive) return;
 
-        if (pc.GetX() > 0 &&
-            !turned)
+        if (pc.GetX() > 0 && !turned)
             HandleTurn(true);
-        else if (pc.GetX() < 0 &&
-            turned)
+        else if (pc.GetX() < 0 && turned)
             HandleTurn(false);
     }
 
-    private void HandleTurn(bool _turned) {
+    private void HandleTurn(bool _turned)
+    {
         currentPresses++;
         turned = _turned;
 
@@ -72,4 +73,5 @@ public class CharcoUI : MonoBehaviour
         Destroy(gameObject);
     }
 }
+
 

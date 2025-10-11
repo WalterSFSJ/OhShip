@@ -3,7 +3,7 @@ using UnityEngine.InputSystem;
 
 public class RedUI : MonoBehaviour
 {
-    [Header("Referencia al jugador")]
+    [Header("Referencia al jugador activo")]
     public Interaction playerInteraction;
 
     [Header("Número de pulsaciones requeridas (conjuntos WASD)")]
@@ -24,13 +24,37 @@ public class RedUI : MonoBehaviour
         currentPresses = 0;
     }
 
-    private void Start()
+    public void Initialize(Interaction interaction)
     {
-        pc = playerInteraction.gameObject.GetComponent<PlayerController>();
+        playerInteraction = interaction;
+
+        if (playerInteraction != null)
+        {
+            pc = playerInteraction.playerController;
+            Debug.Log($"[RedUI] Vinculado a {pc.gameObject.name}");
+        }
+
+        currentPresses = 0;
+        ResetSet();
+        isMinigameActive = true;
+        gameObject.SetActive(true);
     }
+
+    public void StartMinigame()
+    {
+        currentPresses = 0;
+        ResetSet();
+        isMinigameActive = true;
+    }
+
+    public void StopMinigame()
+    {
+        isMinigameActive = false;
+    }
+
     private void Update()
     {
-        if (!isMinigameActive) return;
+        if (!isMinigameActive || pc == null) return;
 
         if (pc.GetY() > 0) wPressed = true;
         if (pc.GetX() < 0) aPressed = true;
@@ -50,18 +74,6 @@ public class RedUI : MonoBehaviour
         }
     }
 
-    public void StartMinigame()
-    {
-        currentPresses = 0;
-        ResetSet();
-        isMinigameActive = true;
-    }
-
-    public void StopMinigame()
-    {
-        isMinigameActive = false;
-    }
-
     private void ResetSet()
     {
         wPressed = aPressed = sPressed = dPressed = false;
@@ -69,26 +81,39 @@ public class RedUI : MonoBehaviour
 
     private void CloseUI()
     {
-        if (playerInteraction != null && playerInteraction.playerController != null)
-            playerInteraction.playerController.enabled = true;
-
-        if (playerInteraction != null && playerInteraction.CurrentTarget != null)
+        if (playerInteraction != null)
         {
-            Interactable interactable = playerInteraction.CurrentTarget.GetComponent<Interactable>();
-            if (interactable != null)
+            if (playerInteraction.CurrentTarget != null && playerInteraction.PlayerTransform != null)
             {
-                if (interactable.uiPanel != null)
-                    interactable.uiPanel.SetActive(false);
-
-                interactable.StartCooldown(cooldownTime);
+                playerInteraction.CurrentTarget.SpawnFish(playerInteraction.PlayerTransform);
             }
 
-            playerInteraction.SetCurrentTarget(null);
+            if (playerInteraction.playerController != null)
+                playerInteraction.playerController.enabled = true;
+
+            if (playerInteraction.CurrentTarget != null)
+            {
+                Interactable interactable = playerInteraction.CurrentTarget.GetComponent<Interactable>();
+                if (interactable != null)
+                {
+                    if (interactable.uiPanel != null)
+                        interactable.uiPanel.SetActive(false);
+
+                    interactable.StartCooldown(cooldownTime);
+                }
+
+                playerInteraction.SetCurrentTarget(null);
+            }
         }
 
+        isMinigameActive = false;
         gameObject.SetActive(false);
     }
 }
+
+
+
+
 
 
 

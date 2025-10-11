@@ -13,7 +13,7 @@ public class Fish : MonoBehaviour
         player = playerTransform;
         isCarried = true;
         transform.SetParent(player);
-        transform.localPosition = new Vector3(0, 0, 1f); 
+        transform.localPosition = new Vector3(0, 0, 1f);
     }
 
     public void Drop()
@@ -23,3 +23,4 @@ public class Fish : MonoBehaviour
         player = null;
     }
 }
+
