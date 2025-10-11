@@ -8,7 +8,7 @@ public class FishBox : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         Fish fish = other.GetComponent<Fish>();
-        if (fish != null && fish.isCarried) 
+        if (fish != null && fish.isCarried)
         {
             if (fish.fishID == acceptedFishID)
             {
@@ -18,7 +18,7 @@ public class FishBox : MonoBehaviour
                 {
                     interaction.ClearCarriedFish();
                 }
-                Destroy(fish.gameObject); 
+                Destroy(fish.gameObject);
             }
             else
             {
@@ -27,3 +27,4 @@ public class FishBox : MonoBehaviour
         }
     }
 }
+

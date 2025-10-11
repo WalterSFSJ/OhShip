@@ -3,7 +3,7 @@ using UnityEngine.InputSystem;
 
 public class RedUI : MonoBehaviour
 {
-    [Header("Referencia al jugador")]
+    [Header("Referencia al jugador activo")]
     public Interaction playerInteraction;
 
     [Header("Número de pulsaciones requeridas (conjuntos WASD)")]
@@ -16,6 +16,7 @@ public class RedUI : MonoBehaviour
     private bool isMinigameActive = false;
 
     private bool wPressed, aPressed, sPressed, dPressed;
+    private PlayerController pc;
 
     private void OnEnable()
     {
@@ -23,26 +24,21 @@ public class RedUI : MonoBehaviour
         currentPresses = 0;
     }
 
-    private void Update()
+    public void Initialize(GameObject interactionGO)
     {
-        if (!isMinigameActive) return;
+        playerInteraction = interactionGO.GetComponent<Interaction>();
 
-        if (Keyboard.current.wKey.wasPressedThisFrame) wPressed = true;
-        if (Keyboard.current.aKey.wasPressedThisFrame) aPressed = true;
-        if (Keyboard.current.sKey.wasPressedThisFrame) sPressed = true;
-        if (Keyboard.current.dKey.wasPressedThisFrame) dPressed = true;
-
-        if (wPressed && aPressed && sPressed && dPressed)
+        if (playerInteraction != null)
         {
-            currentPresses++;
-            Debug.Log($"[RedUI] Conjunto WASD completado: {currentPresses}/{requiredPresses}");
-            ResetSet();
-
-            if (currentPresses >= requiredPresses)
-            {
-                CloseUI();
-            }
+            pc = playerInteraction.playerController;
+            Debug.Log($"[RedUI] Vinculado a {pc.gameObject.name}");
         }
+
+        currentPresses = 0;
+        ResetSet();
+        isMinigameActive = true;
+        gameObject.SetActive(true);
+        Debug.Log(interactionGO.name);
     }
 
     public void StartMinigame()
@@ -57,6 +53,28 @@ public class RedUI : MonoBehaviour
         isMinigameActive = false;
     }
 
+    private void Update()
+    {
+        if (!isMinigameActive || pc == null) return;
+
+        if (pc.GetY() > 0) wPressed = true;
+        if (pc.GetX() < 0) aPressed = true;
+        if (pc.GetY() < 0) sPressed = true;
+        if (pc.GetX() > 0) dPressed = true;
+
+        if (wPressed && aPressed && sPressed && dPressed)
+        {
+            currentPresses++;
+            Debug.Log($"[RedUI] Conjunto WASD completado: {currentPresses}/{requiredPresses}");
+            ResetSet();
+
+            if (currentPresses >= requiredPresses)
+            {
+                CloseUI();
+            }
+        }
+    }
+
     private void ResetSet()
     {
         wPressed = aPressed = sPressed = dPressed = false;
@@ -64,26 +82,41 @@ public class RedUI : MonoBehaviour
 
     private void CloseUI()
     {
-        if (playerInteraction != null && playerInteraction.playerController != null)
-            playerInteraction.playerController.enabled = true;
-
-        if (playerInteraction != null && playerInteraction.CurrentTarget != null)
+        if (playerInteraction != null)
         {
-            Interactable interactable = playerInteraction.CurrentTarget.GetComponent<Interactable>();
-            if (interactable != null)
+            if (playerInteraction.CurrentTarget != null && playerInteraction.PlayerTransform != null)
             {
-                if (interactable.uiPanel != null)
-                    interactable.uiPanel.SetActive(false);
-
-                interactable.StartCooldown(cooldownTime);
+                playerInteraction.CurrentTarget.SpawnFish(playerInteraction.PlayerTransform);
             }
 
-            playerInteraction.SetCurrentTarget(null);
+            if (playerInteraction.playerController != null)
+                playerInteraction.playerController.enabled = true;
+
+            if (playerInteraction.CurrentTarget != null)
+            {
+                Interactable interactable = playerInteraction.CurrentTarget.GetComponent<Interactable>();
+                if (interactable != null)
+                {
+                    if (interactable.uiPanel != null)
+                        interactable.uiPanel.SetActive(false);
+
+                    interactable.StartCooldown(cooldownTime);
+                }
+
+                playerInteraction.SetCurrentTarget(null);
+            }
         }
 
+        isMinigameActive = false;
+        playerInteraction = null;
+        pc = null;
         gameObject.SetActive(false);
     }
 }
+
+
+
+
 
 
 
