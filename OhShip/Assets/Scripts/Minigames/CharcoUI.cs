@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class CharcoUI : MonoBehaviour
 {
@@ -11,7 +10,6 @@ public class CharcoUI : MonoBehaviour
 
     private int currentPresses = 0;
     private bool isMinigameActive = false;
-
     private bool turned = false;
     private PlayerController pc;
 
@@ -22,12 +20,13 @@ public class CharcoUI : MonoBehaviour
 
     private void Start()
     {
-        pc = playerInteraction.gameObject.GetComponent<PlayerController>();
+        if (playerInteraction != null)
+            pc = playerInteraction.GetComponent<PlayerController>();
     }
 
     private void Update()
     {
-        if (!isMinigameActive) return;
+        if (!isMinigameActive || pc == null) return;
 
         if (pc.GetX() > 0 && !turned)
             HandleTurn(true);
@@ -44,7 +43,18 @@ public class CharcoUI : MonoBehaviour
 
         if (currentPresses >= requiredPresses)
         {
+            AwardPoints();
             CloseUI();
+        }
+    }
+
+    private void AwardPoints()
+    {
+        if (playerInteraction != null && playerInteraction.name != null)
+        {
+            string playerName = playerInteraction.gameObject.name; // “WASD” o “arrows”
+            ScoreManager.Instance.AddScore(playerName, 100); // Puedes ajustar el valor
+            Debug.Log($"[CharcoUI] {playerName} ganó 10 puntos");
         }
     }
 
@@ -73,5 +83,7 @@ public class CharcoUI : MonoBehaviour
         Destroy(gameObject);
     }
 }
+
+
 
 
