@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class FishBox : MonoBehaviour
 {
-    [Header("Caja que acepta este tipo de pez")]
     public int acceptedFishID;
+    public int scoreReward = 50;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -13,11 +13,16 @@ public class FishBox : MonoBehaviour
             if (fish.fishID == acceptedFishID)
             {
                 Debug.Log($"[FishBox] Pez {fish.fishID} entregado en {name}");
-                Interaction interaction = FindObjectOfType<Interaction>();
+
+                Interaction interaction = fish.carrier; 
                 if (interaction != null)
                 {
                     interaction.ClearCarriedFish();
+
+                    if (ScoreManager.Instance != null)
+                        ScoreManager.Instance.AddScore(interaction.gameObject.name, scoreReward);
                 }
+
                 Destroy(fish.gameObject);
             }
             else
@@ -27,4 +32,6 @@ public class FishBox : MonoBehaviour
         }
     }
 }
+
+
 

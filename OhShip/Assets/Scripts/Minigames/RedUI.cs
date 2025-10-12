@@ -9,6 +9,9 @@ public class RedUI : MonoBehaviour
     [Header("Número de pulsaciones requeridas (conjuntos WASD)")]
     public int requiredPresses = 10;
 
+    [Header("Puntuación otorgada al completar")]
+    public int scoreReward = 50;
+
     [Header("Cooldown en segundos antes de volver a interactuar")]
     public float cooldownTime = 5f;
 
@@ -38,7 +41,6 @@ public class RedUI : MonoBehaviour
         ResetSet();
         isMinigameActive = true;
         gameObject.SetActive(true);
-        Debug.Log(interactionGO.name);
     }
 
     public void StartMinigame()
@@ -70,8 +72,19 @@ public class RedUI : MonoBehaviour
 
             if (currentPresses >= requiredPresses)
             {
+                AwardPoints();
                 CloseUI();
             }
+        }
+    }
+
+    private void AwardPoints()
+    {
+        if (playerInteraction != null)
+        {
+            string playerName = playerInteraction.gameObject.name; 
+            ScoreManager.Instance.AddScore(playerName, scoreReward);
+            Debug.Log($"[RedUI] {playerName} ganó {scoreReward} puntos");
         }
     }
 
@@ -113,6 +126,7 @@ public class RedUI : MonoBehaviour
         gameObject.SetActive(false);
     }
 }
+
 
 
 
