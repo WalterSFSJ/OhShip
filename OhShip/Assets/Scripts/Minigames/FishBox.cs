@@ -14,7 +14,7 @@ public class FishBox : MonoBehaviour
             {
                 Debug.Log($"[FishBox] Pez {fish.fishID} entregado en {name}");
 
-                Interaction interaction = fish.carrier; // ahora sí existe
+                Interaction interaction = fish.carrier; 
                 if (interaction != null)
                 {
                     interaction.ClearCarriedFish();

@@ -52,8 +52,8 @@ public class CharcoUI : MonoBehaviour
     {
         if (playerInteraction != null && playerInteraction.name != null)
         {
-            string playerName = playerInteraction.gameObject.name; // “WASD” o “arrows”
-            ScoreManager.Instance.AddScore(playerName, 100); // Puedes ajustar el valor
+            string playerName = playerInteraction.gameObject.name; 
+            ScoreManager.Instance.AddScore(playerName, 100); 
             Debug.Log($"[CharcoUI] {playerName} ganó 10 puntos");
         }
     }

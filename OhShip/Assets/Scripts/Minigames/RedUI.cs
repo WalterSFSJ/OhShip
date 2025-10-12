@@ -82,7 +82,7 @@ public class RedUI : MonoBehaviour
     {
         if (playerInteraction != null)
         {
-            string playerName = playerInteraction.gameObject.name; // "WASD" o "arrows"
+            string playerName = playerInteraction.gameObject.name; 
             ScoreManager.Instance.AddScore(playerName, scoreReward);
             Debug.Log($"[RedUI] {playerName} ganó {scoreReward} puntos");
         }

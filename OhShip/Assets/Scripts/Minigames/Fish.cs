@@ -7,7 +7,6 @@ public class Fish : MonoBehaviour
 
     [HideInInspector] public bool isCarried = false;
 
-    // Guardar referencia al Interaction del jugador que lo lleva
     [HideInInspector] public Interaction carrier;
 
     private Transform player;
@@ -17,7 +16,6 @@ public class Fish : MonoBehaviour
         player = playerTransform;
         isCarried = true;
 
-        // Asignar la referencia al Interaction del jugador
         carrier = player.GetComponent<Interaction>();
 
         transform.SetParent(player);

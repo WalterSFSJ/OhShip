@@ -67,7 +67,6 @@ public class Timer : MonoBehaviour
         }
         else
         {
-            // Puedes cambiar "Draw" por "GameOver" si no tienes escena de empate
             SceneManager.LoadScene("Draw");
         }
     }
