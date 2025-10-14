@@ -5,12 +5,18 @@ using UnityEngine.SceneManagement;
 
 public class Timer : MonoBehaviour
 {
-    public float timeInitial = 300f;
+    [Header("Configuración")]
+    public float timeInitial = 300f; // duración inicial (editable en inspector)
     private float timeLeft;
     public Image circle;
     public TMP_Text timerText;
 
     private bool on = true;
+
+    // Propiedades públicas de solo lectura para que otros scripts puedan consultar el temporizador
+    public float TimeInitial => timeInitial;
+    public float TimeLeft => timeLeft;
+    public bool IsRunning => on;
 
     private void Start()
     {
@@ -21,23 +27,29 @@ public class Timer : MonoBehaviour
     {
         if (!on) return;
 
-        if (timeLeft > 0)
+        if (timeLeft > 0f)
         {
             timeLeft -= Time.deltaTime;
+            if (timeLeft < 0f) timeLeft = 0f;
+
             ShowTime(timeLeft);
 
-            // Actualiza el círculo de tiempo
-            circle.fillAmount = timeLeft / timeInitial;
+            // Actualiza el círculo de tiempo (proporción)
+            if (circle != null)
+                circle.fillAmount = timeLeft / (timeInitial > 0f ? timeInitial : 1f);
 
             // Cambia el color según el tiempo restante
-            if (timeLeft < timeInitial / 3)
-                circle.color = Color.red;
-            else if (timeLeft < (timeInitial / 3) * 2)
-                circle.color = Color.yellow;
+            if (circle != null)
+            {
+                if (timeLeft < timeInitial / 3f)
+                    circle.color = Color.red;
+                else if (timeLeft < (timeInitial / 3f) * 2f)
+                    circle.color = Color.yellow;
+            }
         }
         else
         {
-            timeLeft = 0;
+            timeLeft = 0f;
             on = false;
             EndGame();
         }
@@ -73,8 +85,15 @@ public class Timer : MonoBehaviour
 
     private void ShowTime(float time)
     {
-        int minutes = Mathf.FloorToInt(time / 60);
-        int seconds = Mathf.FloorToInt(time % 60);
-        timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
+        int minutes = Mathf.FloorToInt(time / 60f);
+        int seconds = Mathf.FloorToInt(time % 60f);
+        if (timerText != null)
+            timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
     }
+
+    // Métodos públicos útiles (opcional)
+    public void Pause() => on = false;
+    public void Resume() => on = true;
+    public void ResetTimer() => timeLeft = timeInitial;
 }
+
