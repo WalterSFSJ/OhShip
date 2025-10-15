@@ -23,9 +23,12 @@ public class PlayerController : MonoBehaviour
     private Vector2 moveInput; //W
     private bool interacted; //W
 
+    private Animator animator;
+
     private void Awake()
     {
         controller = GetComponent<CharacterController>();
+        animator = gameObject.GetComponentInChildren<Animator>();
     }
 
     public void Move(InputAction.CallbackContext context)
@@ -61,9 +64,13 @@ public class PlayerController : MonoBehaviour
 
         Vector3 move = new Vector3(moveInput.x, 0, moveInput.y); //W
         controller.Move(move * speed * Time.deltaTime); //W
-        if (moveInput.x != 0 || moveInput.y != 0) 
-            this.transform.rotation = Quaternion.LookRotation(new Vector3 (moveInput.x, 0, moveInput.y));
-
+        if (moveInput.x != 0 || moveInput.y != 0)
+        {
+            this.transform.rotation = Quaternion.LookRotation(new Vector3(moveInput.x, 0, moveInput.y));
+            //animator.SetBool("running", true);
+        }
+        else
+            //animator.SetBool("running", false);
         /*if (cameraTransform != null)
         {
             Vector3 camForward = cameraTransform.forward;
