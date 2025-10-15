@@ -3,8 +3,11 @@ using System.Collections;
 
 public class Interactable : MonoBehaviour
 {
-    [Header("UI asociada (solo si aplica)")]
+    [Header("UI asociada al minijuego (si aplica)")]
     public GameObject uiPanel;
+
+    [Header("UI predeterminada (por ejemplo, icono o panel visual)")]
+    public GameObject defaultUIPanel;
 
     [Header("Opcional")]
     public float interactionRange = 2f;
@@ -13,22 +16,16 @@ public class Interactable : MonoBehaviour
     public bool canInteract = true;
 
     [Header("Prefabs de peces que pueden aparecer en cooldown")]
-    public GameObject[] spawnPrefabs; 
-
-    [Header("Referencia al jugador")]
-    public Transform player; 
+    public GameObject[] spawnPrefabs;
 
     [Header("Distancia de spawn respecto al jugador")]
-    public float spawnDistance = 0.5f; 
+    public float spawnDistance = 1f;
 
     [Header("Arrastrable (sin UI)")]
-    public bool isDraggable = false;  
-    public float dragSpeed = 2f;       
-    public float dragDistance = 1f;    
+    public bool isDraggable = false;
+    public float dragSpeed = 2f;
+    public float dragDistance = 1f;
 
-    /// <summary>
-    /// Inicia el cooldown del interactuable
-    /// </summary>
     public void StartCooldown(float seconds)
     {
         StartCoroutine(CooldownCoroutine(seconds));
@@ -37,36 +34,45 @@ public class Interactable : MonoBehaviour
     private IEnumerator CooldownCoroutine(float seconds)
     {
         canInteract = false;
-
-        if (spawnPrefabs != null && spawnPrefabs.Length > 0 && player != null)
-        {
-            int index = Random.Range(0, spawnPrefabs.Length);
-            GameObject prefab = spawnPrefabs[index];
-
-            Vector3 spawnPos = player.position + player.forward * spawnDistance;
-
-            GameObject instance = Instantiate(prefab, spawnPos, player.rotation);
-
-            instance.transform.SetParent(player);
-
-            if (instance.GetComponent<Fish>() == null)
-            {
-                instance.AddComponent<Fish>();
-            }  
-        }
-        else
-        {
-            if (spawnPrefabs == null || spawnPrefabs.Length == 0)
-            if (player == null)
-                { }
-        }
-
         yield return new WaitForSeconds(seconds);
-
         canInteract = true;
+
         Debug.Log($"[Interactable] Cooldown terminado. {gameObject.name} listo para interactuar otra vez.");
     }
+
+    /// <summary>
+    /// Spawnea un pez frente al jugador y hace que lo siga automáticamente.
+    /// </summary>
+    public void SpawnFish(Transform player)
+    {
+        if (spawnPrefabs == null || spawnPrefabs.Length == 0 || player == null)
+        {
+            Debug.LogWarning("[Interactable] No se pudo spawnear pez: faltan referencias.");
+            return;
+        }
+
+        int index = Random.Range(0, spawnPrefabs.Length);
+        GameObject prefab = spawnPrefabs[index];
+
+        GameObject instance = Instantiate(prefab, player.position, Quaternion.identity);
+
+        instance.transform.SetParent(player);
+        instance.transform.localPosition = new Vector3(0, 0, spawnDistance);
+        instance.transform.localRotation = Quaternion.identity;
+
+        if (instance.GetComponent<Fish>() == null)
+            instance.AddComponent<Fish>();
+
+        Debug.Log($"[Interactable] Pez {prefab.name} spawneado frente a {player.name}");
+    }
 }
+
+
+
+
+
+
+
 
 
 

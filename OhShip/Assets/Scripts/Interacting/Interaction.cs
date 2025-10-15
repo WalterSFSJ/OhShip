@@ -5,22 +5,31 @@ using System.Reflection;
 public class Interaction : MonoBehaviour
 {
     [SerializeField] private Transform player;
-    [SerializeField] public PlayerController playerController;
+    public Transform PlayerTransform => player; 
 
     [Header("Rangos")]
     [SerializeField] private float pickupRadius = 1.5f;
 
-    private Interactable currentTarget;
+    public Interactable currentTarget;
     public Interactable CurrentTarget => currentTarget;
 
     private Fish carriedFish;
-    private bool eEnabled = true; 
+    private bool eEnabled = true;
 
     private Interactable draggedObject;
 
     [Header("Arrastre")]
-    [SerializeField] private float dragSpeedMultiplier = 0.3f; 
+    [SerializeField] private float dragSpeedMultiplier = 0.3f;
     private float originalSpeed;
+
+    [Header("Referencia al PlayerController")]
+    public PlayerController playerController;
+
+    private void Start()
+    {
+        if (playerController == null)
+            playerController = GetComponent<PlayerController>();
+    }
 
     public void SetCurrentTarget(Interactable target)
     {
@@ -29,16 +38,15 @@ public class Interaction : MonoBehaviour
 
     private void Update()
     {
-        if (carriedFish != null)
-            return;
+        if (carriedFish != null) return;
 
         if (draggedObject != null)
         {
-            if (Keyboard.current.eKey.isPressed)
+            if (playerController.GetInteracted())
             {
                 DragObject(draggedObject);
             }
-            else if (Keyboard.current.eKey.wasReleasedThisFrame)
+            else if (!playerController.GetInteracted())
             {
                 ReleaseDraggedObject();
             }
@@ -47,7 +55,7 @@ public class Interaction : MonoBehaviour
 
         currentTarget = FindClosestInteractable();
 
-        if (Keyboard.current.eKey.wasPressedThisFrame && eEnabled)
+        if (playerController != null && playerController.GetInteracted())
         {
             Collider[] nearby = Physics.OverlapSphere(player.position, pickupRadius);
             foreach (var hit in nearby)
@@ -59,7 +67,7 @@ public class Interaction : MonoBehaviour
                     return;
                 }
             }
-
+            
             if (currentTarget != null && currentTarget.isDraggable)
             {
                 StartDragging(currentTarget);
@@ -79,7 +87,7 @@ public class Interaction : MonoBehaviour
 
         Rigidbody rb = draggedObject.GetComponent<Rigidbody>();
         if (rb != null)
-            rb.isKinematic = true; 
+            rb.isKinematic = true;
 
         if (playerController != null)
         {
@@ -107,7 +115,7 @@ public class Interaction : MonoBehaviour
 
         Rigidbody rb = draggedObject.GetComponent<Rigidbody>();
         if (rb != null)
-            rb.isKinematic = false; 
+            rb.isKinematic = false;
 
         if (playerController != null)
         {
@@ -141,44 +149,58 @@ public class Interaction : MonoBehaviour
     }
 
     private void OpenUI(Interactable target)
+{
+    if (target.uiPanel != null)
     {
-        if (target.uiPanel != null)
+        // Cerrar las demás UIs del mismo jugador
+        Interactable[] all = FindObjectsOfType<Interactable>();
+        foreach (var obj in all)
         {
-            Interactable[] all = FindObjectsOfType<Interactable>();
-            foreach (var obj in all)
+            if (obj == target || obj.uiPanel == null) continue;
+
+            var otherChar = obj.uiPanel.GetComponent<CharcoUI>();
+            var otherRed = obj.uiPanel.GetComponent<RedUI>();
+
+            bool samePlayer =
+                (otherChar != null && otherChar.playerInteraction == this) ||
+                (otherRed != null && otherRed.playerInteraction == this);
+
+            if (samePlayer)
             {
-                if (obj.uiPanel != null && obj != target)
-                {
-                    obj.uiPanel.SetActive(false);
-
-                    var otherChar = obj.uiPanel.GetComponent<CharcoUI>();
-                    if (otherChar != null) otherChar.StopMinigame();
-
-                    var otherRed = obj.uiPanel.GetComponent<RedUI>();
-                    if (otherRed != null) otherRed.StopMinigame();
-                }
+                obj.uiPanel.SetActive(false);
+                if (otherChar != null) otherChar.StopMinigame();
+                if (otherRed != null) otherRed.StopMinigame();
             }
-
-            target.uiPanel.SetActive(true);
-
-            var charUI = target.uiPanel.GetComponent<CharcoUI>();
-            if (charUI != null)
-            {
-                charUI.playerInteraction = this;
-                charUI.StartMinigame();
-            }
-
-            var redUI = target.uiPanel.GetComponent<RedUI>();
-            if (redUI != null)
-            {
-                redUI.playerInteraction = this;
-                redUI.StartMinigame();
-            }
-
-            if (playerController != null)
-                playerController.enabled = false;
         }
+
+        // ?? Cerrar la UI predeterminada del objeto antes de abrir el minijuego
+        if (target.defaultUIPanel != null && target.defaultUIPanel.activeSelf)
+        {
+            target.defaultUIPanel.SetActive(false);
+            Debug.Log($"[Interaction] UI predeterminada de {target.name} cerrada al abrir el minijuego.");
+        }
+
+        // ?? Abrir la UI del minijuego
+        target.uiPanel.SetActive(true);
+
+        var charUI = target.uiPanel.GetComponent<CharcoUI>();
+        if (charUI != null)
+        {
+            charUI.playerInteraction = this;
+            charUI.StartMinigame();
+        }
+
+        var redUI = target.uiPanel.GetComponent<RedUI>();
+        if (redUI != null)
+        {
+            redUI.Initialize(this.gameObject);
+        }
+
+        if (playerController != null)
+            playerController.enabled = false;
     }
+}
+
 
     public void CloseUI(Interactable target)
     {
@@ -208,7 +230,7 @@ public class Interaction : MonoBehaviour
         if (playerController != null)
         {
             playerController.enabled = true;
-        }   
+        }
     }
 
     private void PickupFish(Fish fish)
@@ -221,20 +243,15 @@ public class Interaction : MonoBehaviour
         DisableE();
     }
 
-    public void ClearCarriedFish() 
+    public void ClearCarriedFish()
     {
         carriedFish = null;
         EnableE();
     }
 
-    private void DisableE()
-    {
-        eEnabled = false;
-    }
-
-    private void EnableE()
-    {
-        eEnabled = true;
-    }
+    private void DisableE() => eEnabled = false;
+    private void EnableE() => eEnabled = true;
 }
+
+
 

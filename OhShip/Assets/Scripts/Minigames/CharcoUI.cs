@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class CharcoUI : MonoBehaviour
 {
@@ -11,25 +10,51 @@ public class CharcoUI : MonoBehaviour
 
     private int currentPresses = 0;
     private bool isMinigameActive = false;
+    private bool turned = false;
+    private PlayerController pc;
 
     private void OnEnable()
     {
         currentPresses = 0;
     }
 
+    private void Start()
+    {
+        if (playerInteraction != null)
+            pc = playerInteraction.GetComponent<PlayerController>();
+    }
+
     private void Update()
     {
-        if (!isMinigameActive) return;
+        if (!isMinigameActive || pc == null) return;
 
-        if (Keyboard.current.aKey.wasPressedThisFrame || Keyboard.current.dKey.wasPressedThisFrame)
+        if (pc.GetX() > 0 && !turned)
+            HandleTurn(true);
+        else if (pc.GetX() < 0 && turned)
+            HandleTurn(false);
+    }
+
+    private void HandleTurn(bool _turned)
+    {
+        currentPresses++;
+        turned = _turned;
+
+        Debug.Log($"[CharcoUI] Pulsaciones: {currentPresses}/{requiredPresses}");
+
+        if (currentPresses >= requiredPresses)
         {
-            currentPresses++;
-            Debug.Log($"[CharcoUI] Pulsaciones: {currentPresses}/{requiredPresses}");
+            AwardPoints();
+            CloseUI();
+        }
+    }
 
-            if (currentPresses >= requiredPresses)
-            {
-                CloseUI();
-            }
+    private void AwardPoints()
+    {
+        if (playerInteraction != null && playerInteraction.name != null)
+        {
+            string playerName = playerInteraction.gameObject.name; 
+            ScoreManager.Instance.AddScore(playerName, 100); 
+            Debug.Log($"[CharcoUI] {playerName} ganó 10 puntos");
         }
     }
 
@@ -58,4 +83,7 @@ public class CharcoUI : MonoBehaviour
         Destroy(gameObject);
     }
 }
+
+
+
 
