@@ -351,6 +351,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   uiPanel: {fileID: 7212977362131679700}
+  defaultUIPanel: {fileID: 2392138926290311091}
   interactionRange: 2
   canInteract: 1
   spawnPrefabs:
@@ -550,6 +551,7 @@ GameObject:
   - component: {fileID: 7587594653088472454}
   - component: {fileID: 6996880394958218247}
   - component: {fileID: 6938218627370475894}
+  - component: {fileID: 6420798405911204322}
   m_Layer: 0
   m_Name: Panel
   m_TagString: Untagged
@@ -634,6 +636,31 @@ MonoBehaviour:
   requiredPresses: 5
   scoreReward: 50
   cooldownTime: 5
+--- !u!114 &6420798405911204322
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7212977362131679700}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3213d888e5d76e4ba9703a1025fd2c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  imageA: {fileID: 1436013100806926705}
+  imageB: {fileID: 8835281624398883504}
+  imageC: {fileID: 5351977760400605787}
+  imageD: {fileID: 8453110958717309093}
+  spriteA1: {fileID: 21300000, guid: 33974b2688759a34283e46f5293c620d, type: 3}
+  spriteA2: {fileID: 21300000, guid: 4d2c3c0285395f04fbb3b359cf9c3714, type: 3}
+  spriteB1: {fileID: 21300000, guid: 33974b2688759a34283e46f5293c620d, type: 3}
+  spriteB2: {fileID: 21300000, guid: 4d2c3c0285395f04fbb3b359cf9c3714, type: 3}
+  spriteC1: {fileID: 21300000, guid: 33974b2688759a34283e46f5293c620d, type: 3}
+  spriteC2: {fileID: 21300000, guid: 4d2c3c0285395f04fbb3b359cf9c3714, type: 3}
+  spriteD1: {fileID: 21300000, guid: 33974b2688759a34283e46f5293c620d, type: 3}
+  spriteD2: {fileID: 21300000, guid: 4d2c3c0285395f04fbb3b359cf9c3714, type: 3}
+  switchInterval: 0.5
 --- !u!1 &7533457435452103539
 GameObject:
   m_ObjectHideFlags: 0

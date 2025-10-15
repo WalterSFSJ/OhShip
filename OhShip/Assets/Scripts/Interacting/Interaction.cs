@@ -149,48 +149,58 @@ public class Interaction : MonoBehaviour
     }
 
     private void OpenUI(Interactable target)
+{
+    if (target.uiPanel != null)
     {
-        if (target.uiPanel != null)
+        // Cerrar las demás UIs del mismo jugador
+        Interactable[] all = FindObjectsOfType<Interactable>();
+        foreach (var obj in all)
         {
-            Interactable[] all = FindObjectsOfType<Interactable>();
-            foreach (var obj in all)
+            if (obj == target || obj.uiPanel == null) continue;
+
+            var otherChar = obj.uiPanel.GetComponent<CharcoUI>();
+            var otherRed = obj.uiPanel.GetComponent<RedUI>();
+
+            bool samePlayer =
+                (otherChar != null && otherChar.playerInteraction == this) ||
+                (otherRed != null && otherRed.playerInteraction == this);
+
+            if (samePlayer)
             {
-                if (obj == target || obj.uiPanel == null) continue;
-
-                var otherChar = obj.uiPanel.GetComponent<CharcoUI>();
-                var otherRed = obj.uiPanel.GetComponent<RedUI>();
-
-                bool samePlayer =
-                    (otherChar != null && otherChar.playerInteraction == this) ||
-                    (otherRed != null && otherRed.playerInteraction == this);
-
-                if (samePlayer)
-                {
-                    obj.uiPanel.SetActive(false);
-                    if (otherChar != null) otherChar.StopMinigame();
-                    if (otherRed != null) otherRed.StopMinigame();
-                }
+                obj.uiPanel.SetActive(false);
+                if (otherChar != null) otherChar.StopMinigame();
+                if (otherRed != null) otherRed.StopMinigame();
             }
-
-            target.uiPanel.SetActive(true);
-
-            var charUI = target.uiPanel.GetComponent<CharcoUI>();
-            if (charUI != null)
-            {
-                charUI.playerInteraction = this;
-                charUI.StartMinigame();
-            }
-
-            var redUI = target.uiPanel.GetComponent<RedUI>();
-            if (redUI != null)
-            {
-                redUI.Initialize(this.gameObject);
-            }
-
-            if (playerController != null)
-                playerController.enabled = false;
         }
+
+        // ?? Cerrar la UI predeterminada del objeto antes de abrir el minijuego
+        if (target.defaultUIPanel != null && target.defaultUIPanel.activeSelf)
+        {
+            target.defaultUIPanel.SetActive(false);
+            Debug.Log($"[Interaction] UI predeterminada de {target.name} cerrada al abrir el minijuego.");
+        }
+
+        // ?? Abrir la UI del minijuego
+        target.uiPanel.SetActive(true);
+
+        var charUI = target.uiPanel.GetComponent<CharcoUI>();
+        if (charUI != null)
+        {
+            charUI.playerInteraction = this;
+            charUI.StartMinigame();
+        }
+
+        var redUI = target.uiPanel.GetComponent<RedUI>();
+        if (redUI != null)
+        {
+            redUI.Initialize(this.gameObject);
+        }
+
+        if (playerController != null)
+            playerController.enabled = false;
     }
+}
+
 
     public void CloseUI(Interactable target)
     {

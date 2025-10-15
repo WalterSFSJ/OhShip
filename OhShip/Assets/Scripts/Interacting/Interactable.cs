@@ -3,8 +3,11 @@ using System.Collections;
 
 public class Interactable : MonoBehaviour
 {
-    [Header("UI asociada (solo si aplica)")]
+    [Header("UI asociada al minijuego (si aplica)")]
     public GameObject uiPanel;
+
+    [Header("UI predeterminada (por ejemplo, icono o panel visual)")]
+    public GameObject defaultUIPanel;
 
     [Header("Opcional")]
     public float interactionRange = 2f;
@@ -38,9 +41,8 @@ public class Interactable : MonoBehaviour
     }
 
     /// <summary>
-    /// Spawnea un pez frente al jugador y hace que lo siga automáticamente
+    /// Spawnea un pez frente al jugador y hace que lo siga automáticamente.
     /// </summary>
-    /// <param name="player">Transform del jugador que completó el minijuego</param>
     public void SpawnFish(Transform player)
     {
         if (spawnPrefabs == null || spawnPrefabs.Length == 0 || player == null)
@@ -55,7 +57,6 @@ public class Interactable : MonoBehaviour
         GameObject instance = Instantiate(prefab, player.position, Quaternion.identity);
 
         instance.transform.SetParent(player);
-
         instance.transform.localPosition = new Vector3(0, 0, spawnDistance);
         instance.transform.localRotation = Quaternion.identity;
 
@@ -65,6 +66,7 @@ public class Interactable : MonoBehaviour
         Debug.Log($"[Interactable] Pez {prefab.name} spawneado frente a {player.name}");
     }
 }
+
 
 
 

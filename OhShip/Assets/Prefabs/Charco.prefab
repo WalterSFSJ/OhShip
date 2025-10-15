@@ -416,6 +416,7 @@ GameObject:
   - component: {fileID: 4481861393012862411}
   - component: {fileID: 4739260992793220813}
   - component: {fileID: 5583693953475594112}
+  - component: {fileID: 481736589028986818}
   m_Layer: 0
   m_Name: Panel
   m_TagString: Untagged
@@ -498,6 +499,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerInteraction: {fileID: 0}
   requiredPresses: 10
+--- !u!114 &481736589028986818
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5803739579002635576}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3213d888e5d76e4ba9703a1025fd2c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  imageA: {fileID: 1765167375020631154}
+  imageB: {fileID: 6361159749428238178}
+  spriteA1: {fileID: 21300000, guid: 33974b2688759a34283e46f5293c620d, type: 3}
+  spriteA2: {fileID: 21300000, guid: 4d2c3c0285395f04fbb3b359cf9c3714, type: 3}
+  spriteB1: {fileID: 21300000, guid: 33974b2688759a34283e46f5293c620d, type: 3}
+  spriteB2: {fileID: 21300000, guid: 4d2c3c0285395f04fbb3b359cf9c3714, type: 3}
+  switchInterval: 0.5
 --- !u!1 &7786203529744855045
 GameObject:
   m_ObjectHideFlags: 0
@@ -725,6 +745,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   uiPanel: {fileID: 5803739579002635576}
+  defaultUIPanel: {fileID: 4415407154033294487}
   interactionRange: 2
   canInteract: 1
   spawnPrefabs: []
