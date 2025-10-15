@@ -513,10 +513,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   imageA: {fileID: 1765167375020631154}
   imageB: {fileID: 6361159749428238178}
+  imageC: {fileID: 0}
+  imageD: {fileID: 0}
   spriteA1: {fileID: 21300000, guid: 33974b2688759a34283e46f5293c620d, type: 3}
   spriteA2: {fileID: 21300000, guid: 4d2c3c0285395f04fbb3b359cf9c3714, type: 3}
   spriteB1: {fileID: 21300000, guid: 33974b2688759a34283e46f5293c620d, type: 3}
   spriteB2: {fileID: 21300000, guid: 4d2c3c0285395f04fbb3b359cf9c3714, type: 3}
+  spriteC1: {fileID: 0}
+  spriteC2: {fileID: 0}
+  spriteD1: {fileID: 0}
+  spriteD2: {fileID: 0}
   switchInterval: 0.5
 --- !u!1 &7786203529744855045
 GameObject:
@@ -544,7 +550,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7786203529744855045}
   m_LocalRotation: {x: 0.19132291, y: 0, z: 0, w: 0.98152715}
-  m_LocalPosition: {x: 0, y: 0, z: -0.33}
+  m_LocalPosition: {x: 0, y: 0, z: 0.01}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

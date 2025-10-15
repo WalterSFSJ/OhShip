@@ -9,6 +9,9 @@ EditorBuildSettings:
     path: Assets/Scenes/MainMenu.unity
     guid: bdef4c43e004675499a6a209cfdbea9e
   - enabled: 1
+    path: Assets/Scenes/Scenes/Enviro.unity
+    guid: c4a5b3535e8deaf4cb6043faef5eaebf
+  - enabled: 0
     path: Assets/Scenes/MakingHud.unity
     guid: be8f29e6014ceed4f931f2d4653b9301
   - enabled: 0
