@@ -25,6 +25,10 @@ public class PlayerController : MonoBehaviour
 
     private Animator animator;
 
+    public Animator GiveAnimator() {
+        return animator;
+    }
+
     private void Awake()
     {
         controller = GetComponent<CharacterController>();
@@ -67,10 +71,10 @@ public class PlayerController : MonoBehaviour
         if (moveInput.x != 0 || moveInput.y != 0)
         {
             this.transform.rotation = Quaternion.LookRotation(new Vector3(moveInput.x, 0, moveInput.y));
-            //animator.SetBool("running", true);
+            animator.SetBool("running", true);
         }
         else
-            //animator.SetBool("running", false);
+            animator.SetBool("running", false);
         /*if (cameraTransform != null)
         {
             Vector3 camForward = cameraTransform.forward;

@@ -976,9 +976,12 @@ PrefabInstance:
         'mixamorig:LeftHandThumb2'\n\tTransform 'mixamorig:LeftHandIndex1'\n\tTransform
         'mixamorig:Spine1'\n\tTransform 'mixamorig:LeftToeBase'\n\tTransform 'mixamorig:LeftHandThumb3'\n\tTransform
         'mixamorig:RightArm'\n\tTransform 'mixamorig:LeftLeg'\n\tTransform 'mixamorig:LeftShoulder'\n\tand
-        more ...\n\tFrom animation clip 'Running'\n\tFrom animation clip 'FallBack'\n\tFrom
-        animation clip 'MovePulley'\n\tFrom animation clip 'PullHeavyObject'\n\tFrom
-        animation clip 'WorkingOnDevicce'"
+        more ...\n\tFrom animation clip 'FallBack'\n\tFrom animation clip 'MovePulley'\n\tFrom
+        animation clip 'PullHeavyObject'"
+      objectReference: {fileID: 0}
+    - target: {fileID: 5866666021909216657, guid: 40baab9b3f9fe2d478ac830ca8e62b8a, type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8450560953775929927, guid: 40baab9b3f9fe2d478ac830ca8e62b8a, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
