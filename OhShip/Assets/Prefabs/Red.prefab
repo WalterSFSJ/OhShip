@@ -634,8 +634,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerInteraction: {fileID: 0}
   requiredPresses: 5
-  scoreReward: 50
-  cooldownTime: 5
+  scoreReward: 200
+  cooldownTime: 12
 --- !u!114 &6420798405911204322
 MonoBehaviour:
   m_ObjectHideFlags: 0

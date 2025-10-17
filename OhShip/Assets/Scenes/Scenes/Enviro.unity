@@ -552,7 +552,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   acceptedFishID: 2
-  scoreReward: 50
+  scoreReward: 300
 --- !u!65 &41484953
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -849,7 +849,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 59.85
+  m_fontSize: 49.95
   m_fontSizeBase: 56.1
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -2755,7 +2755,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   acceptedFishID: 1
-  scoreReward: 50
+  scoreReward: 300
 --- !u!65 &459812291
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4100,7 +4100,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 59.85
+  m_fontSize: 50
   m_fontSizeBase: 56.1
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -6844,7 +6844,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   acceptedFishID: 0
-  scoreReward: 50
+  scoreReward: 300
 --- !u!65 &1205444780
 BoxCollider:
   m_ObjectHideFlags: 0
