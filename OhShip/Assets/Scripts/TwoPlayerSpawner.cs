@@ -4,6 +4,7 @@ using UnityEngine.InputSystem;
 public class TwoPlayerSpawner : MonoBehaviour
 {
     [SerializeField] private GameObject playerPrefab;
+    [SerializeField] private GameObject player2Prefab;
     [SerializeField] private Transform[] spawnPoints;
 
     void Start()
@@ -16,7 +17,7 @@ public class TwoPlayerSpawner : MonoBehaviour
 
         player1.transform.position = spawnPoints[0].position;
 
-        var player2 = PlayerInput.Instantiate(playerPrefab,
+        var player2 = PlayerInput.Instantiate(player2Prefab,
                 controlScheme: "Arrows",
                 pairWithDevice: Keyboard.current);
 
