@@ -123,7 +123,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefabs:
   - {fileID: 9184159507949114351, guid: aa5317a6d3723da41a442da12f959cf4, type: 3}
-  maxObjects: 3
-  respawnThreshold: 3
-  minSpawnTime: 1
-  maxSpawnTime: 3
+  maxObjects: 1
+  respawnThreshold: 0
+  minSpawnTime: 3
+  maxSpawnTime: 5

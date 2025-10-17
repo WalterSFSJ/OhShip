@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System.Collections;
 
 public class RedUI : MonoBehaviour
 {
@@ -20,6 +21,7 @@ public class RedUI : MonoBehaviour
 
     private bool wPressed, aPressed, sPressed, dPressed;
     private PlayerController pc;
+    private Interactable currentInteractable;
 
     private void OnEnable()
     {
@@ -34,6 +36,7 @@ public class RedUI : MonoBehaviour
         if (playerInteraction != null)
         {
             pc = playerInteraction.playerController;
+            currentInteractable = playerInteraction.CurrentTarget;
             Debug.Log($"[RedUI] Vinculado a {pc.gameObject.name}");
         }
 
@@ -82,7 +85,7 @@ public class RedUI : MonoBehaviour
     {
         if (playerInteraction != null)
         {
-            string playerName = playerInteraction.gameObject.name; 
+            string playerName = playerInteraction.gameObject.name;
             ScoreManager.Instance.AddScore(playerName, scoreReward);
             Debug.Log($"[RedUI] {playerName} ganó {scoreReward} puntos");
         }
@@ -114,6 +117,10 @@ public class RedUI : MonoBehaviour
                         interactable.uiPanel.SetActive(false);
 
                     interactable.StartCooldown(cooldownTime);
+
+                    // ?? Lanza la coroutine desde el Interactable (no se desactiva)
+                    if (interactable.defaultUIPanel != null)
+                        interactable.StartCoroutine(ReenableDefaultUIAfterCooldown(interactable));
                 }
 
                 playerInteraction.SetCurrentTarget(null);
@@ -123,9 +130,24 @@ public class RedUI : MonoBehaviour
         isMinigameActive = false;
         playerInteraction = null;
         pc = null;
+
+        // ?? Desactiva el UI DESPUÉS, no antes.
         gameObject.SetActive(false);
     }
+
+    private IEnumerator ReenableDefaultUIAfterCooldown(Interactable interactable)
+    {
+        yield return new WaitForSeconds(cooldownTime);
+
+        if (interactable != null && interactable.defaultUIPanel != null)
+        {
+            interactable.defaultUIPanel.SetActive(true);
+            Debug.Log($"[RedUI] Reactivada la UI predeterminada de {interactable.name} tras el cooldown.");
+        }
+    }
 }
+
+
 
 
 

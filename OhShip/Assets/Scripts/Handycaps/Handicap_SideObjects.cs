@@ -13,8 +13,7 @@ public class Handicap_SideObjects : MonoBehaviour
     public float yOffset = -2f;
 
     [Header("Posición Z")]
-    [Tooltip("Z para instanciar objetos (0 en 2D, 10 o más en 3D si lo necesitas)")]
-    public float zPos = 0f; // antes estaba en 10f, que tapaba a los personajes
+    public float zPos = 0f;
 
     void OnEnable()
     {
@@ -43,16 +42,11 @@ public class Handicap_SideObjects : MonoBehaviour
         {
             if (sideObjects[i] == null) continue;
 
-            bool fromLeft;
-            if (sideObjects.Length == 2)
-                fromLeft = (i == 0);
-            else
-                fromLeft = Random.value > 0.5f;
+            bool fromLeft = (sideObjects.Length == 2) ? (i == 0) : (Random.value > 0.5f);
 
             float startX = fromLeft ? -width / 2f - offscreenDistance : width / 2f + offscreenDistance;
             float yPos = Random.Range(-height / 2f, height / 2f) + yOffset;
 
-            // ? Corregido: zPos configurable (antes era 10f que bloqueaba la cámara)
             Vector3 spawnPos = new Vector3(cam.transform.position.x + startX, yPos, zPos);
             GameObject obj = Instantiate(sideObjects[i], spawnPos, Quaternion.identity);
 
@@ -62,28 +56,43 @@ public class Handicap_SideObjects : MonoBehaviour
                 zPos
             );
 
-            // Si tiene SpriteRenderer, opcionalmente lo enviamos detrás de los personajes
             SpriteRenderer sr = obj.GetComponent<SpriteRenderer>();
             if (sr != null)
                 sr.sortingOrder = -5;
 
-            StartCoroutine(MoveObject(obj, target));
-            Destroy(obj, appearDuration);
+            // Calculamos el punto de salida (igual al lado de inicio)
+            float exitX = fromLeft ? -width / 2f - offscreenDistance : width / 2f + offscreenDistance;
+            Vector3 exitPos = new Vector3(cam.transform.position.x + exitX, yPos, zPos);
+
+            StartCoroutine(MoveInAndOut(obj, target, exitPos));
         }
 
         yield return null;
     }
 
-    IEnumerator MoveObject(GameObject obj, Vector3 target)
+    IEnumerator MoveInAndOut(GameObject obj, Vector3 target, Vector3 exitPos)
     {
+        // Entrar
         float elapsed = 0f;
-        while (elapsed < appearDuration)
+        while (obj != null && elapsed < appearDuration / 2f)
         {
-            if (obj == null) yield break;
             obj.transform.position = Vector3.MoveTowards(obj.transform.position, target, moveSpeed * Time.deltaTime);
             elapsed += Time.deltaTime;
             yield return null;
         }
+
+        // Salir
+        elapsed = 0f;
+        while (obj != null && elapsed < appearDuration / 2f)
+        {
+            obj.transform.position = Vector3.MoveTowards(obj.transform.position, exitPos, moveSpeed * Time.deltaTime);
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        if (obj != null)
+            Destroy(obj);
     }
 }
+
 
