@@ -92,7 +92,7 @@ Material:
     - _QueueOffset: 0
     - _SeaTransparency: 0.5
     - _SlideSpeed: 2
-    - _TilingFoam: 2.5
+    - _TilingFoam: 4
     - _Transparency: 1
     - _TransparencyFoam: 0.61
     - _WaterContrast: 1.86
@@ -109,8 +109,10 @@ Material:
     - _water_depth: 0
     m_Colors:
     - _FoamColor: {r: 0.84994656, g: 0.85316896, b: 0.9433962, a: 1}
+    - _NormalScrollingSpeed: {r: 4, g: 0, b: 0, a: 0}
     - _Normals1Direction: {r: 0.03, g: 0.025, b: 0, a: 0}
     - _Normals2Direction: {r: -0.02, g: -0.01, b: 0, a: 0}
+    - _ScrollingSpeed: {r: 15, g: 0, b: 0, a: 0}
     - _WaterColor1: {r: 0.24703789, g: 0, b: 1, a: 1}
     - _WaterColor2: {r: 0.22745097, g: 0.7554581, b: 0.90588236, a: 0}
     - _deep_color: {r: 0, g: 0.37065926, b: 0.53207535, a: 0}
