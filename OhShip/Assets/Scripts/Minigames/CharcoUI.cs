@@ -1,7 +1,12 @@
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
+using static UnityEngine.ParticleSystem;
 
 public class CharcoUI : MonoBehaviour
 {
+    [SerializeField] GameObject particles;
+
+
     [Header("Referencia al jugador")]
     public Interaction playerInteraction;
 
@@ -80,6 +85,7 @@ public class CharcoUI : MonoBehaviour
             playerInteraction.SetCurrentTarget(null);
         }
 
+        Instantiate(particles, this.transform.position, this.transform.rotation);
         Destroy(gameObject);
     }
 }

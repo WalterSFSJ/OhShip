@@ -501,6 +501,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 5496800927357001368}
+  particles: {fileID: 8852057700277066407, guid: 8108185a0749e944ea4ebda1c78abc89, type: 3}
   pickupRadius: 1.5
   currentTarget: {fileID: 0}
   dragSpeedMultiplier: 0.3

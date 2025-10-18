@@ -497,6 +497,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c2717a64d5016c4a8fc3afa838c2542, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  particles: {fileID: 8852057700277066407, guid: 8108185a0749e944ea4ebda1c78abc89, type: 3}
   playerInteraction: {fileID: 0}
   requiredPresses: 10
 --- !u!114 &481736589028986818
@@ -718,10 +719,10 @@ Rigidbody:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9184159507949114351}
-  serializedVersion: 5
+  serializedVersion: 4
   m_Mass: 100
-  m_LinearDamping: 0
-  m_AngularDamping: 0.05
+  m_Drag: 0
+  m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}

@@ -4,7 +4,8 @@ public class FishBox : MonoBehaviour
 {
     public int acceptedFishID;
     public int scoreReward = 50;
-
+    [SerializeField]
+    private GameObject particles;
     private void OnTriggerEnter(Collider other)
     {
         Fish fish = other.GetComponent<Fish>();
@@ -24,6 +25,7 @@ public class FishBox : MonoBehaviour
                 }
 
                 Destroy(fish.gameObject);
+                Instantiate(particles, this.transform);
             }
             else
             {
