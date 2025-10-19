@@ -6,8 +6,8 @@ using System.Collections;
 [System.Serializable]
 public class FishUIEntry
 {
-    public int fishID;         // ID del pez
-    public GameObject uiPanel; // UI asociada a ese pez
+    public int fishID;        
+    public GameObject uiPanel; 
 }
 
 public class Interaction : MonoBehaviour
@@ -49,7 +49,6 @@ public class Interaction : MonoBehaviour
 
     private void Update()
     {
-        // --- 1?? Recoger peces automáticamente ---
         if (carriedFish == null)
         {
             Collider[] nearby = Physics.OverlapSphere(player.position, pickupRadius);
@@ -58,13 +57,12 @@ public class Interaction : MonoBehaviour
                 Fish fish = hit.GetComponent<Fish>();
                 if (fish != null && !fish.isCarried)
                 {
-                    PickupFish(fish); // se recoge automáticamente
+                    PickupFish(fish);
                     break;
                 }
             }
         }
 
-        // --- 2?? Drag & Interaction ---
         if (draggedObject != null)
         {
             if (playerController.GetInteracted())
@@ -166,7 +164,6 @@ public class Interaction : MonoBehaviour
     {
         if (target.uiPanel != null)
         {
-            // Cerrar otras UIs del mismo jugador
             Interactable[] all = FindObjectsOfType<Interactable>();
             foreach (var obj in all)
             {
@@ -190,7 +187,6 @@ public class Interaction : MonoBehaviour
             if (target.defaultUIPanel != null && target.defaultUIPanel.activeSelf)
             {
                 target.defaultUIPanel.SetActive(false);
-                Debug.Log($"[Interaction] UI predeterminada de {target.name} cerrada al abrir minijuego.");
             }
 
             target.uiPanel.SetActive(true);
@@ -251,7 +247,6 @@ public class Interaction : MonoBehaviour
         fish.PickUp(player);
         carriedFish = fish;
 
-        // Abre la UI asociada al pez inmediatamente
         OpenFishUI(fish.fishID);
 
         DisableE();
@@ -262,7 +257,6 @@ public class Interaction : MonoBehaviour
         carriedFish = null;
         EnableE();
 
-        // Cierra todas las UIs de peces al soltar
         foreach (var entry in fishUIs)
         {
             if (entry.uiPanel != null)

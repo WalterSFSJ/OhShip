@@ -40,7 +40,6 @@ public class RedUI : MonoBehaviour
         {
             pc = playerInteraction.playerController;
             currentInteractable = playerInteraction.CurrentTarget;
-            Debug.Log($"[RedUI] Vinculado a {pc.gameObject.name}");
         }
 
         currentPresses = 0;
@@ -73,7 +72,6 @@ public class RedUI : MonoBehaviour
         if (wPressed && aPressed && sPressed && dPressed)
         {
             currentPresses++;
-            Debug.Log($"[RedUI] Conjunto WASD completado: {currentPresses}/{requiredPresses}");
             ResetSet();
 
             if (currentPresses >= requiredPresses)
@@ -90,7 +88,6 @@ public class RedUI : MonoBehaviour
         {
             string playerName = playerInteraction.gameObject.name;
             ScoreManager.Instance.AddScore(playerName, scoreReward);
-            Debug.Log($"[RedUI] {playerName} ganó {scoreReward} puntos");
         }
     }
 
@@ -101,7 +98,6 @@ public class RedUI : MonoBehaviour
 
     private void CloseUI()
     {
-        // Reproducir sonido de completado en objeto temporal
         PlayCompletionSound();
 
         if (playerInteraction != null)
@@ -136,7 +132,6 @@ public class RedUI : MonoBehaviour
         playerInteraction = null;
         pc = null;
 
-        // Desactivar inmediatamente el panel
         gameObject.SetActive(false);
     }
 
@@ -144,13 +139,11 @@ public class RedUI : MonoBehaviour
     {
         if (completionSound == null) return;
 
-        // Crear un objeto temporal solo para reproducir el audio
         GameObject tempAudio = new GameObject("TempAudio");
         AudioSource aSource = tempAudio.AddComponent<AudioSource>();
         aSource.clip = completionSound;
         aSource.Play();
 
-        // Destruir el objeto después de que termine el clip
         Destroy(tempAudio, completionSound.length);
     }
 
@@ -161,7 +154,6 @@ public class RedUI : MonoBehaviour
         if (interactable != null && interactable.defaultUIPanel != null)
         {
             interactable.defaultUIPanel.SetActive(true);
-            Debug.Log($"[RedUI] Reactivada la UI predeterminada de {interactable.name} tras el cooldown.");
         }
     }
 }

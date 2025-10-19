@@ -5,7 +5,7 @@ public class FishBox : MonoBehaviour
     public int acceptedFishID;
     public int scoreReward = 50;
     [SerializeField] private GameObject particles;
-    [SerializeField] private AudioClip successSound; // ? Sonido al entregar el pez
+    [SerializeField] private AudioClip successSound; 
     private AudioSource audioSource;
 
     private void Start()
@@ -24,7 +24,6 @@ public class FishBox : MonoBehaviour
         {
             if (fish.fishID == acceptedFishID)
             {
-                Debug.Log($"[FishBox] Pez {fish.fishID} entregado en {name}");
 
                 Interaction interaction = fish.carrier;
                 if (interaction != null)
@@ -38,13 +37,8 @@ public class FishBox : MonoBehaviour
                 Destroy(fish.gameObject);
                 Instantiate(particles, transform);
 
-                // ?? Reproducir sonido
                 if (successSound != null)
                     audioSource.PlayOneShot(successSound);
-            }
-            else
-            {
-                Debug.Log($"[FishBox] Pez incorrecto para {name}");
             }
         }
     }

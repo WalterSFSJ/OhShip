@@ -6,14 +6,13 @@ using UnityEngine.SceneManagement;
 public class Timer : MonoBehaviour
 {
     [Header("Configuración")]
-    public float timeInitial = 300f; // duración inicial (editable en inspector)
+    public float timeInitial = 300f; 
     private float timeLeft;
     public Image circle;
     public TMP_Text timerText;
 
     private bool on = true;
 
-    // Propiedades públicas de solo lectura para que otros scripts puedan consultar el temporizador
     public float TimeInitial => timeInitial;
     public float TimeLeft => timeLeft;
     public bool IsRunning => on;
@@ -34,11 +33,9 @@ public class Timer : MonoBehaviour
 
             ShowTime(timeLeft);
 
-            // Actualiza el círculo de tiempo (proporción)
             if (circle != null)
                 circle.fillAmount = timeLeft / (timeInitial > 0f ? timeInitial : 1f);
 
-            // Cambia el color según el tiempo restante
             if (circle != null)
             {
                 if (timeLeft < timeInitial / 3f)
@@ -59,15 +56,12 @@ public class Timer : MonoBehaviour
     {
         if (ScoreManager.Instance == null)
         {
-            Debug.LogWarning("No se encontró el ScoreManager. Cargando GameOver...");
             SceneManager.LoadScene("GameOver");
             return;
         }
 
         int p1 = ScoreManager.Instance.player1Score;
         int p2 = ScoreManager.Instance.player2Score;
-
-        Debug.Log($"[Timer] Fin del tiempo — P1: {p1}, P2: {p2}");
 
         if (p1 > p2)
         {
@@ -91,7 +85,6 @@ public class Timer : MonoBehaviour
             timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
     }
 
-    // Métodos públicos útiles (opcional)
     public void Pause() => on = false;
     public void Resume() => on = true;
     public void ResetTimer() => timeLeft = timeInitial;

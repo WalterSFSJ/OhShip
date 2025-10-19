@@ -50,8 +50,6 @@ public class CharcoUI : MonoBehaviour
         currentPresses++;
         turned = _turned;
 
-        Debug.Log($"[CharcoUI] Pulsaciones: {currentPresses}/{requiredPresses}");
-
         if (currentPresses >= requiredPresses)
         {
             AwardPoints();
@@ -65,7 +63,6 @@ public class CharcoUI : MonoBehaviour
         {
             string playerName = playerInteraction.gameObject.name;
             ScoreManager.Instance.AddScore(playerName, 100);
-            Debug.Log($"[CharcoUI] {playerName} ganó 100 puntos");
         }
     }
 
@@ -91,29 +88,23 @@ public class CharcoUI : MonoBehaviour
             playerInteraction.SetCurrentTarget(null);
         }
 
-        // ?? Instanciar partículas
         GameObject p = Instantiate(particles, transform.position, transform.rotation);
 
-        // ?? Reproducir sonido sincronizado
         if (particleSound != null)
         {
             if (attachSoundToParticles)
             {
-                // El sonido se "adhiere" al objeto de partículas
                 AudioSource src = p.AddComponent<AudioSource>();
                 src.clip = particleSound;
                 src.volume = soundVolume;
-                src.spatialBlend = 0f; // 2D (ajusta a 1f si quieres 3D)
+                src.spatialBlend = 0f;
                 src.Play();
             }
             else
             {
-                // El sonido se reproduce globalmente (no ligado al sistema de partículas)
                 AudioSource.PlayClipAtPoint(particleSound, transform.position, soundVolume);
             }
         }
-
-        // ?? Destruir UI al terminar
         Destroy(gameObject);
     }
 }

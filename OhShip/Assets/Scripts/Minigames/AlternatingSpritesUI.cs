@@ -40,7 +40,6 @@ public class AlternatingSpritesUI : MonoBehaviour
 
     private void Awake()
     {
-        // Crear o usar un AudioSource
         audioSource = GetComponent<AudioSource>();
         if (audioSource == null)
             audioSource = gameObject.AddComponent<AudioSource>();
@@ -58,7 +57,6 @@ public class AlternatingSpritesUI : MonoBehaviour
 
         if (activeImages.Count == 0)
         {
-            Debug.LogWarning("[AlternatingSpritesUI] No hay imágenes asignadas. El script no hará nada.");
             return;
         }
 
@@ -74,10 +72,6 @@ public class AlternatingSpritesUI : MonoBehaviour
         {
             activeImages.Add(img);
             spritePairs[img] = new Sprite[] { s1, s2 };
-        }
-        else if (img != null)
-        {
-            Debug.LogWarning($"[AlternatingSpritesUI] La imagen {img.name} tiene sprites nulos y será ignorada.");
         }
     }
 
@@ -97,7 +91,6 @@ public class AlternatingSpritesUI : MonoBehaviour
                 continue;
             }
 
-            // Restaurar sprite anterior si sigue activa
             if (previousIndex >= 0 && previousIndex < activeImages.Count)
             {
                 var prevImg = activeImages[previousIndex];
@@ -105,7 +98,6 @@ public class AlternatingSpritesUI : MonoBehaviour
                     prevImg.sprite = spritePairs[prevImg][0];
             }
 
-            // Cambiar sprite actual
             if (index >= activeImages.Count)
                 index = 0;
 
@@ -168,7 +160,6 @@ public class AlternatingSpritesUI : MonoBehaviour
                 alternationCoroutine = StartCoroutine(AlternateSpritesSequentially());
         }
 
-        // ?? Iniciar sonido en loop cuando se active la UI
         if (loopSound != null && audioSource != null)
         {
             audioSource.clip = loopSound;
@@ -192,7 +183,6 @@ public class AlternatingSpritesUI : MonoBehaviour
                 img.sprite = spritePairs[img][0];
         }
 
-        // ?? Detener sonido cuando la UI se desactive
         if (audioSource != null && audioSource.isPlaying)
             audioSource.Stop();
     }

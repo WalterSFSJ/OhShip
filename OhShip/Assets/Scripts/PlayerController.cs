@@ -7,7 +7,6 @@ using UnityEngine.UI;
 public class PlayerController : MonoBehaviour
 {
 
-    // ESTO ES TODO PROVISIONAL 
 
     [Header("Movimiento")]
     [SerializeField] private float speed = 5f;
@@ -22,8 +21,8 @@ public class PlayerController : MonoBehaviour
     private CharacterController controller;
     private Vector3 verticalVelocity;
 
-    private Vector2 moveInput; //W
-    private bool interacted; //W
+    private Vector2 moveInput; 
+    private bool interacted; 
 
     private Animator animator;
     private AudioSource stepAudioSource;
@@ -60,17 +59,12 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        // Leemos WASD mediante Keyboard.current
         float forward = 0f;
         float right = 0f;
 
-        //if (Keyboard.current.wKey.isPressed) forward += 1f; //W
-        //if (Keyboard.current.sKey.isPressed) forward -= 1f; //W
-        //if (Keyboard.current.dKey.isPressed) right += 1f; //W
-        //if (Keyboard.current.aKey.isPressed) right -= 1f; //W
 
-        Vector3 move = new Vector3(moveInput.x, 0, moveInput.y); //W
-        controller.Move(move * speed * Time.deltaTime); //W
+        Vector3 move = new Vector3(moveInput.x, 0, moveInput.y); 
+        controller.Move(move * speed * Time.deltaTime); 
         if (moveInput.x != 0 || moveInput.y != 0)
         {
             this.transform.rotation = Quaternion.LookRotation(new Vector3(moveInput.x, 0, moveInput.y));
@@ -89,34 +83,8 @@ public class PlayerController : MonoBehaviour
 
             var em = particles.emission;
             em.enabled = false;
-        }/*if (cameraTransform != null)
-        {
-            Vector3 camForward = cameraTransform.forward;
-            camForward.y = 0f;
-            camForward.Normalize();
-
-            Vector3 camRight = cameraTransform.right;
-            camRight.y = 0f;
-            camRight.Normalize();
-
-            move = camForward * forward + camRight * right;
-        }
-        else
-        {
-            move = new Vector3(right, 0f, forward);
         }
 
-        if (move.sqrMagnitude > 0.001f)
-        {
-            move = move.normalized * speed;
-
-            Quaternion targetRot = Quaternion.LookRotation(new Vector3(move.x, 0f, move.z));
-            transform.rotation = Quaternion.Slerp(transform.rotation, targetRot, rotationSpeed * Time.deltaTime);
-
-            controller.Move(move * Time.deltaTime);
-        }*/
-
-        // Gravedad
         if (!controller.isGrounded)
         {
             verticalVelocity.y += gravity * Time.deltaTime;
