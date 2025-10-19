@@ -14,6 +14,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float rotationSpeed = 12f;
     [SerializeField] private Transform cameraTransform = null;
 
+    [SerializeField] private ParticleSystem particles;
+
     [Header("Gravedad")]
     [SerializeField] private float gravity = -9.81f;
 
@@ -24,7 +26,7 @@ public class PlayerController : MonoBehaviour
     private bool interacted; //W
 
     private Animator animator;
-
+    private AudioSource stepAudioSource;
     public Animator GiveAnimator() {
         return animator;
     }
@@ -33,6 +35,7 @@ public class PlayerController : MonoBehaviour
     {
         controller = GetComponent<CharacterController>();
         animator = gameObject.GetComponentInChildren<Animator>();
+        stepAudioSource = gameObject.GetComponentInChildren<AudioSource>();
     }
 
     public void Move(InputAction.CallbackContext context)
@@ -72,10 +75,21 @@ public class PlayerController : MonoBehaviour
         {
             this.transform.rotation = Quaternion.LookRotation(new Vector3(moveInput.x, 0, moveInput.y));
             animator.SetBool("running", true);
+
+            stepAudioSource.enabled = true;
+
+            var em = particles.emission;
+            em.enabled = true;
         }
         else
+        {
             animator.SetBool("running", false);
-        /*if (cameraTransform != null)
+
+            stepAudioSource.enabled = false;
+
+            var em = particles.emission;
+            em.enabled = false;
+        }/*if (cameraTransform != null)
         {
             Vector3 camForward = cameraTransform.forward;
             camForward.y = 0f;

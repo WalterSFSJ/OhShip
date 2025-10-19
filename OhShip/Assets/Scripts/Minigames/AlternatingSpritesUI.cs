@@ -25,13 +25,32 @@ public class AlternatingSpritesUI : MonoBehaviour
     [Tooltip("Tiempo entre cada cambio de sprite (en segundos)")]
     public float switchInterval = 0.5f;
 
-    private bool isRunning = true;
+    [Header("Sonido")]
+    [Tooltip("Clip de audio que se reproducirá en loop mientras la UI esté activa")]
+    public AudioClip loopSound;
+    private AudioSource audioSource;
+
+    private bool isRunning = false;
     private List<Image> activeImages = new List<Image>();
     private Dictionary<Image, Sprite[]> spritePairs = new Dictionary<Image, Sprite[]>();
+    private Coroutine alternationCoroutine;
+
+    private int index = 0;
+    private int previousIndex = -1;
+
+    private void Awake()
+    {
+        // Crear o usar un AudioSource
+        audioSource = GetComponent<AudioSource>();
+        if (audioSource == null)
+            audioSource = gameObject.AddComponent<AudioSource>();
+
+        audioSource.loop = true;
+        audioSource.playOnAwake = false;
+    }
 
     private void Start()
     {
-        // Registrar imágenes activas y sus sprites si existen
         AddImage(imageA, spriteA1, spriteA2);
         AddImage(imageB, spriteB1, spriteB2);
         AddImage(imageC, spriteC1, spriteC2);
@@ -43,65 +62,148 @@ public class AlternatingSpritesUI : MonoBehaviour
             return;
         }
 
-        // Inicializar todas en su primer sprite
         foreach (var img in activeImages)
             img.sprite = spritePairs[img][0];
 
-        StartCoroutine(AlternateSpritesSequentially());
+        StartAlternation();
     }
 
     private void AddImage(Image img, Sprite s1, Sprite s2)
     {
-        if (img != null)
+        if (img != null && s1 != null && s2 != null)
         {
             activeImages.Add(img);
             spritePairs[img] = new Sprite[] { s1, s2 };
+        }
+        else if (img != null)
+        {
+            Debug.LogWarning($"[AlternatingSpritesUI] La imagen {img.name} tiene sprites nulos y será ignorada.");
         }
     }
 
     private IEnumerator AlternateSpritesSequentially()
     {
-        int index = 0;
-        int previousIndex = -1;
-
-        while (isRunning)
+        while (true)
         {
-            // Restaurar la imagen anterior a su sprite base
-            if (previousIndex >= 0)
+            if (!isRunning)
             {
-                Image previousImage = activeImages[previousIndex];
-                previousImage.sprite = spritePairs[previousImage][0];
+                yield return null;
+                continue;
             }
 
-            // Cambiar la imagen actual a su sprite alternativo
-            Image currentImage = activeImages[index];
-            currentImage.sprite = spritePairs[currentImage][1];
+            if (activeImages.Count == 0)
+            {
+                yield return null;
+                continue;
+            }
 
-            // Guardar índice anterior
+            // Restaurar sprite anterior si sigue activa
+            if (previousIndex >= 0 && previousIndex < activeImages.Count)
+            {
+                var prevImg = activeImages[previousIndex];
+                if (prevImg != null && prevImg.gameObject.activeInHierarchy)
+                    prevImg.sprite = spritePairs[prevImg][0];
+            }
+
+            // Cambiar sprite actual
+            if (index >= activeImages.Count)
+                index = 0;
+
+            var currentImage = activeImages[index];
+
+            if (currentImage != null && currentImage.gameObject.activeInHierarchy)
+            {
+                var pair = spritePairs[currentImage];
+                if (pair != null && pair.Length > 1 && pair[1] != null)
+                    currentImage.sprite = pair[1];
+            }
+
             previousIndex = index;
-
-            // Esperar antes de pasar a la siguiente imagen
-            yield return new WaitForSeconds(switchInterval);
-
-            // Avanzar
             index = (index + 1) % activeImages.Count;
+
+            yield return new WaitForSeconds(switchInterval);
         }
+    }
+
+    private void StartAlternation()
+    {
+        if (alternationCoroutine == null)
+            alternationCoroutine = StartCoroutine(AlternateSpritesSequentially());
+
+        isRunning = true;
     }
 
     public void StopAlternation()
     {
         isRunning = false;
+
+        foreach (var img in activeImages)
+        {
+            if (img != null)
+                img.sprite = spritePairs[img][0];
+        }
     }
 
     public void ResumeAlternation()
     {
-        if (!isRunning)
+        isRunning = true;
+    }
+
+    public void RestartAlternation()
+    {
+        index = 0;
+        previousIndex = -1;
+        isRunning = true;
+    }
+
+    private void OnEnable()
+    {
+        if (activeImages.Count > 0)
         {
+            index = 0;
+            previousIndex = -1;
             isRunning = true;
-            StartCoroutine(AlternateSpritesSequentially());
+
+            if (alternationCoroutine == null)
+                alternationCoroutine = StartCoroutine(AlternateSpritesSequentially());
+        }
+
+        // ?? Iniciar sonido en loop cuando se active la UI
+        if (loopSound != null && audioSource != null)
+        {
+            audioSource.clip = loopSound;
+            audioSource.Play();
         }
     }
+
+    private void OnDisable()
+    {
+        isRunning = false;
+
+        if (alternationCoroutine != null)
+        {
+            StopCoroutine(alternationCoroutine);
+            alternationCoroutine = null;
+        }
+
+        foreach (var img in activeImages)
+        {
+            if (img != null)
+                img.sprite = spritePairs[img][0];
+        }
+
+        // ?? Detener sonido cuando la UI se desactive
+        if (audioSource != null && audioSource.isPlaying)
+            audioSource.Stop();
+    }
 }
+
+
+
+
+
+
+
 
 
 

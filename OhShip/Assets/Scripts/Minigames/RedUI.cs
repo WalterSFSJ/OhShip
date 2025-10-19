@@ -16,6 +16,9 @@ public class RedUI : MonoBehaviour
     [Header("Cooldown en segundos antes de volver a interactuar")]
     public float cooldownTime = 5f;
 
+    [Header("Sonido al completar el minijuego")]
+    public AudioClip completionSound;
+
     private int currentPresses = 0;
     private bool isMinigameActive = false;
 
@@ -98,6 +101,9 @@ public class RedUI : MonoBehaviour
 
     private void CloseUI()
     {
+        // Reproducir sonido de completado en objeto temporal
+        PlayCompletionSound();
+
         if (playerInteraction != null)
         {
             if (playerInteraction.CurrentTarget != null && playerInteraction.PlayerTransform != null)
@@ -118,7 +124,6 @@ public class RedUI : MonoBehaviour
 
                     interactable.StartCooldown(cooldownTime);
 
-                    // ?? Lanza la coroutine desde el Interactable (no se desactiva)
                     if (interactable.defaultUIPanel != null)
                         interactable.StartCoroutine(ReenableDefaultUIAfterCooldown(interactable));
                 }
@@ -131,8 +136,22 @@ public class RedUI : MonoBehaviour
         playerInteraction = null;
         pc = null;
 
-        // ?? Desactiva el UI DESPUÉS, no antes.
+        // Desactivar inmediatamente el panel
         gameObject.SetActive(false);
+    }
+
+    private void PlayCompletionSound()
+    {
+        if (completionSound == null) return;
+
+        // Crear un objeto temporal solo para reproducir el audio
+        GameObject tempAudio = new GameObject("TempAudio");
+        AudioSource aSource = tempAudio.AddComponent<AudioSource>();
+        aSource.clip = completionSound;
+        aSource.Play();
+
+        // Destruir el objeto después de que termine el clip
+        Destroy(tempAudio, completionSound.length);
     }
 
     private IEnumerator ReenableDefaultUIAfterCooldown(Interactable interactable)
@@ -146,6 +165,7 @@ public class RedUI : MonoBehaviour
         }
     }
 }
+
 
 
 
