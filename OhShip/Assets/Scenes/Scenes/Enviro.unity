@@ -731,7 +731,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   acceptedFishID: 2
   scoreReward: 300
-  particles: {fileID: 0}
+  particles: {fileID: 8852057700277066407, guid: 8108185a0749e944ea4ebda1c78abc89, type: 3}
+  successSound: {fileID: 8300000, guid: 6b2a43c5056133646afbb9d1fcf14046, type: 3}
 --- !u!65 &41484953
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2781,7 +2782,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   acceptedFishID: 1
   scoreReward: 300
-  particles: {fileID: 0}
+  particles: {fileID: 8852057700277066407, guid: 8108185a0749e944ea4ebda1c78abc89, type: 3}
+  successSound: {fileID: 8300000, guid: 6b2a43c5056133646afbb9d1fcf14046, type: 3}
 --- !u!65 &459812291
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -7339,7 +7341,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   acceptedFishID: 0
   scoreReward: 300
-  particles: {fileID: 0}
+  particles: {fileID: 8852057700277066407, guid: 8108185a0749e944ea4ebda1c78abc89, type: 3}
+  successSound: {fileID: 8300000, guid: 6b2a43c5056133646afbb9d1fcf14046, type: 3}
 --- !u!65 &1205444780
 BoxCollider:
   m_ObjectHideFlags: 0
