@@ -4,8 +4,19 @@ public class FishBox : MonoBehaviour
 {
     public int acceptedFishID;
     public int scoreReward = 50;
-    [SerializeField]
-    private GameObject particles;
+    [SerializeField] private GameObject particles;
+    [SerializeField] private AudioClip successSound; // ? Sonido al entregar el pez
+    private AudioSource audioSource;
+
+    private void Start()
+    {
+        audioSource = GetComponent<AudioSource>();
+        if (audioSource == null)
+        {
+            audioSource = gameObject.AddComponent<AudioSource>();
+        }
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         Fish fish = other.GetComponent<Fish>();
@@ -15,7 +26,7 @@ public class FishBox : MonoBehaviour
             {
                 Debug.Log($"[FishBox] Pez {fish.fishID} entregado en {name}");
 
-                Interaction interaction = fish.carrier; 
+                Interaction interaction = fish.carrier;
                 if (interaction != null)
                 {
                     interaction.ClearCarriedFish();
@@ -25,7 +36,11 @@ public class FishBox : MonoBehaviour
                 }
 
                 Destroy(fish.gameObject);
-                Instantiate(particles, this.transform);
+                Instantiate(particles, transform);
+
+                // ?? Reproducir sonido
+                if (successSound != null)
+                    audioSource.PlayOneShot(successSound);
             }
             else
             {
@@ -34,6 +49,7 @@ public class FishBox : MonoBehaviour
         }
     }
 }
+
 
 
 
