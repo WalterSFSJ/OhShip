@@ -500,6 +500,9 @@ MonoBehaviour:
   particles: {fileID: 8852057700277066407, guid: 8108185a0749e944ea4ebda1c78abc89, type: 3}
   playerInteraction: {fileID: 0}
   requiredPresses: 10
+  particleSound: {fileID: 8300000, guid: 6b2a43c5056133646afbb9d1fcf14046, type: 3}
+  soundVolume: 1
+  attachSoundToParticles: 1
 --- !u!114 &481736589028986818
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -525,6 +528,7 @@ MonoBehaviour:
   spriteD1: {fileID: 0}
   spriteD2: {fileID: 0}
   switchInterval: 0.5
+  loopSound: {fileID: 8300000, guid: 0c9d1ff0057374b44a0f20788bb34b47, type: 3}
 --- !u!1 &7786203529744855045
 GameObject:
   m_ObjectHideFlags: 0
