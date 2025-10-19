@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(CharacterController))]
 public class PlayerController : MonoBehaviour
@@ -62,6 +63,8 @@ public class PlayerController : MonoBehaviour
         float forward = 0f;
         float right = 0f;
 
+        if (Input.GetKeyDown(KeyCode.Escape)) { SceneManager.LoadScene(0); }
+        if (Input.GetKeyDown(KeyCode.RightShift)) { SceneManager.LoadScene(1); }
 
         Vector3 move = new Vector3(moveInput.x, 0, moveInput.y); 
         controller.Move(move * speed * Time.deltaTime); 
