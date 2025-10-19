@@ -369,10 +369,10 @@ Rigidbody:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3310434732394632958}
-  serializedVersion: 5
+  serializedVersion: 4
   m_Mass: 1
-  m_LinearDamping: 0
-  m_AngularDamping: 0.05
+  m_Drag: 0
+  m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -636,6 +636,7 @@ MonoBehaviour:
   requiredPresses: 5
   scoreReward: 200
   cooldownTime: 12
+  completionSound: {fileID: 8300000, guid: ded064a62cb30214989316cf2850cc28, type: 3}
 --- !u!114 &6420798405911204322
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -661,6 +662,7 @@ MonoBehaviour:
   spriteD1: {fileID: 21300000, guid: 33974b2688759a34283e46f5293c620d, type: 3}
   spriteD2: {fileID: 21300000, guid: 4d2c3c0285395f04fbb3b359cf9c3714, type: 3}
   switchInterval: 0.5
+  loopSound: {fileID: 8300000, guid: 3a117a92b4a836445ba19971bdcc4b7c, type: 3}
 --- !u!1 &7533457435452103539
 GameObject:
   m_ObjectHideFlags: 0

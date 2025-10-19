@@ -15,6 +15,24 @@ public class Handicap_SideObjects : MonoBehaviour
     [Header("Posición Z")]
     public float zPos = 0f;
 
+    [Header("Sonido")]
+    [Tooltip("Efecto de sonido que se reproducirá cuando los objetos se muevan")]
+    public AudioClip moveSound;
+    [Tooltip("Volumen del sonido de movimiento")]
+    [Range(0f, 1f)] public float soundVolume = 1f;
+
+    private AudioSource audioSource;
+
+    void Awake()
+    {
+        // Crear o reutilizar un AudioSource
+        audioSource = GetComponent<AudioSource>();
+        if (audioSource == null)
+            audioSource = gameObject.AddComponent<AudioSource>();
+
+        audioSource.playOnAwake = false;
+    }
+
     void OnEnable()
     {
         HandicapManager.OnMidHandicap += ActivateHandicap;
@@ -63,6 +81,10 @@ public class Handicap_SideObjects : MonoBehaviour
             // Calculamos el punto de salida (igual al lado de inicio)
             float exitX = fromLeft ? -width / 2f - offscreenDistance : width / 2f + offscreenDistance;
             Vector3 exitPos = new Vector3(cam.transform.position.x + exitX, yPos, zPos);
+
+            // ?? Reproducir sonido de movimiento
+            if (moveSound != null && audioSource != null)
+                audioSource.PlayOneShot(moveSound, soundVolume);
 
             StartCoroutine(MoveInAndOut(obj, target, exitPos));
         }

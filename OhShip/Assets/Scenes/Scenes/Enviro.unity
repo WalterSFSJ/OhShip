@@ -4136,6 +4136,8 @@ MonoBehaviour:
   offscreenDistance: 10
   yOffset: 15
   zPos: -10
+  moveSound: {fileID: 8300000, guid: 405297740b4124540acc1a1934d60063, type: 3}
+  soundVolume: 1
 --- !u!4 &708588632
 Transform:
   m_ObjectHideFlags: 0

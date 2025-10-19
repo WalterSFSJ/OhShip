@@ -4,14 +4,20 @@ using static UnityEngine.ParticleSystem;
 
 public class CharcoUI : MonoBehaviour
 {
-    [SerializeField] GameObject particles;
-
+    [SerializeField] private GameObject particles;
 
     [Header("Referencia al jugador")]
     public Interaction playerInteraction;
 
     [Header("Número de pulsaciones requeridas")]
     public int requiredPresses = 10;
+
+    [Header("Efecto de sonido")]
+    [Tooltip("Sonido que se reproducirá cuando salgan las partículas.")]
+    public AudioClip particleSound;
+    [Range(0f, 1f)] public float soundVolume = 1f;
+    [Tooltip("Si está activado, el sonido seguirá al objeto de partículas.")]
+    public bool attachSoundToParticles = false;
 
     private int currentPresses = 0;
     private bool isMinigameActive = false;
@@ -57,9 +63,9 @@ public class CharcoUI : MonoBehaviour
     {
         if (playerInteraction != null && playerInteraction.name != null)
         {
-            string playerName = playerInteraction.gameObject.name; 
-            ScoreManager.Instance.AddScore(playerName, 100); 
-            Debug.Log($"[CharcoUI] {playerName} ganó 10 puntos");
+            string playerName = playerInteraction.gameObject.name;
+            ScoreManager.Instance.AddScore(playerName, 100);
+            Debug.Log($"[CharcoUI] {playerName} ganó 100 puntos");
         }
     }
 
@@ -85,10 +91,33 @@ public class CharcoUI : MonoBehaviour
             playerInteraction.SetCurrentTarget(null);
         }
 
-        Instantiate(particles, this.transform.position, this.transform.rotation);
+        // ?? Instanciar partículas
+        GameObject p = Instantiate(particles, transform.position, transform.rotation);
+
+        // ?? Reproducir sonido sincronizado
+        if (particleSound != null)
+        {
+            if (attachSoundToParticles)
+            {
+                // El sonido se "adhiere" al objeto de partículas
+                AudioSource src = p.AddComponent<AudioSource>();
+                src.clip = particleSound;
+                src.volume = soundVolume;
+                src.spatialBlend = 0f; // 2D (ajusta a 1f si quieres 3D)
+                src.Play();
+            }
+            else
+            {
+                // El sonido se reproduce globalmente (no ligado al sistema de partículas)
+                AudioSource.PlayClipAtPoint(particleSound, transform.position, soundVolume);
+            }
+        }
+
+        // ?? Destruir UI al terminar
         Destroy(gameObject);
     }
 }
+
 
 
 

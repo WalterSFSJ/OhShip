@@ -25,6 +25,11 @@ public class AlternatingSpritesUI : MonoBehaviour
     [Tooltip("Tiempo entre cada cambio de sprite (en segundos)")]
     public float switchInterval = 0.5f;
 
+    [Header("Sonido")]
+    [Tooltip("Clip de audio que se reproducirá en loop mientras la UI esté activa")]
+    public AudioClip loopSound;
+    private AudioSource audioSource;
+
     private bool isRunning = false;
     private List<Image> activeImages = new List<Image>();
     private Dictionary<Image, Sprite[]> spritePairs = new Dictionary<Image, Sprite[]>();
@@ -32,6 +37,17 @@ public class AlternatingSpritesUI : MonoBehaviour
 
     private int index = 0;
     private int previousIndex = -1;
+
+    private void Awake()
+    {
+        // Crear o usar un AudioSource
+        audioSource = GetComponent<AudioSource>();
+        if (audioSource == null)
+            audioSource = gameObject.AddComponent<AudioSource>();
+
+        audioSource.loop = true;
+        audioSource.playOnAwake = false;
+    }
 
     private void Start()
     {
@@ -140,7 +156,6 @@ public class AlternatingSpritesUI : MonoBehaviour
         isRunning = true;
     }
 
-    // ?? Manejo automático al mostrar/ocultar el panel
     private void OnEnable()
     {
         if (activeImages.Count > 0)
@@ -151,6 +166,13 @@ public class AlternatingSpritesUI : MonoBehaviour
 
             if (alternationCoroutine == null)
                 alternationCoroutine = StartCoroutine(AlternateSpritesSequentially());
+        }
+
+        // ?? Iniciar sonido en loop cuando se active la UI
+        if (loopSound != null && audioSource != null)
+        {
+            audioSource.clip = loopSound;
+            audioSource.Play();
         }
     }
 
@@ -169,8 +191,14 @@ public class AlternatingSpritesUI : MonoBehaviour
             if (img != null)
                 img.sprite = spritePairs[img][0];
         }
+
+        // ?? Detener sonido cuando la UI se desactive
+        if (audioSource != null && audioSource.isPlaying)
+            audioSource.Stop();
     }
 }
+
+
 
 
 
