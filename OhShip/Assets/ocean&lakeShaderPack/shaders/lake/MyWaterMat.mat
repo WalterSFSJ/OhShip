@@ -1,0 +1,123 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-997454100067976881
+MonoBehaviour:
+  m_ObjectHideFlags: 11
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 10
+--- !u!21 &2100000
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: MyWaterMat
+  m_Shader: {fileID: -6465566751694194690, guid: dc2eda6be747fa44f827bedcb89fd86d, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords: []
+  m_InvalidKeywords:
+  - _EMISSION
+  m_LightmapFlags: 2
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses:
+  - MOTIONVECTORS
+  m_LockedProperties: 
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _SampleTexture2D_62f9d1f736594c778d4bb5bf65331181_Texture_1_Texture2D:
+        m_Texture: {fileID: 2800000, guid: b45732303b138e24d90dc136e0a595d0, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SampleTexture2D_9719ec94b01f425a987931c02ff40e81_Texture_1_Texture2D:
+        m_Texture: {fileID: 2800000, guid: 127979ce540641348a10b46a6735b6f1, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SampleTexture2D_a3a72f37b86c4750b2f70b4a62beb93e_Texture_1_Texture2D:
+        m_Texture: {fileID: 2800000, guid: 6ce36dddbd0232d41ac22e9b0bee6d42, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SampleTexture2D_a7f8833032f343dda0d0fb94dc575419_Texture_1_Texture2D:
+        m_Texture: {fileID: 2800000, guid: 2ce5c55e85304b819a1826ecbc839aa5, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SampleTexture2D_ba1d14f95a704a34a07c58d4b41c00fa_Texture_1_Texture2D:
+        m_Texture: {fileID: 2800000, guid: 6ce36dddbd0232d41ac22e9b0bee6d42, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SampleTexture2D_bd8904f7d74748098aad822e36ad6951_Texture_1_Texture2D:
+        m_Texture: {fileID: 2800000, guid: 6ce36dddbd0232d41ac22e9b0bee6d42, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Texture2DAsset_d4319f6f05ec4e7fa0e1ee760e458bc0_Out_0_Texture2D:
+        m_Texture: {fileID: 2800000, guid: dded0a5ce81311942a5dae1764b8b28a, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _foam_taxture:
+        m_Texture: {fileID: 2800000, guid: dded0a5ce81311942a5dae1764b8b28a, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_Lightmaps:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_LightmapsInd:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_ShadowMasks:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
+    m_Floats:
+    - _Float: 0
+    - _GradientTiling: 5
+    - _ObjFoamScale: 20
+    - _ObjFoamSpeed: 0.05
+    - _QueueControl: 0
+    - _QueueOffset: 0
+    - _SeaTransparency: 0.5
+    - _SlideSpeed: 2
+    - _TilingFoam: 4
+    - _Transparency: 1
+    - _TransparencyFoam: 0.61
+    - _WaterContrast: 1.86
+    - _WaterNormalStrength: 8.01
+    - _WaterNormalTiling: 0.85
+    - _WaterNormalVelocity: 0.01
+    - _foam_distance: 1
+    - _foam_scale: 1
+    - _foam_speed: 1
+    - _refraction_scale: 1
+    - _refraction_speed: 0.5
+    - _refraction_strength: 0
+    - _smoothness: 0.75
+    - _water_depth: 0
+    m_Colors:
+    - _FoamColor: {r: 0.84994656, g: 0.85316896, b: 0.9433962, a: 1}
+    - _NormalScrollingSpeed: {r: 4, g: 0, b: 0, a: 0}
+    - _Normals1Direction: {r: 0.03, g: 0.025, b: 0, a: 0}
+    - _Normals2Direction: {r: -0.02, g: -0.01, b: 0, a: 0}
+    - _ScrollingSpeed: {r: 15, g: 0, b: 0, a: 0}
+    - _WaterColor1: {r: 0.24703789, g: 0, b: 1, a: 1}
+    - _WaterColor2: {r: 0.22745097, g: 0.7554581, b: 0.90588236, a: 0}
+    - _deep_color: {r: 0, g: 0.37065926, b: 0.53207535, a: 0}
+    - _foam_color: {r: 0, g: 0.9774632, b: 1, a: 1}
+    - _foam_color2: {r: 1, g: 1, b: 1, a: 0}
+    - _shallow_color: {r: 0, g: 0.6907899, b: 1, a: 0}
+  m_BuildTextureStacks: []
+  m_AllowLocking: 1

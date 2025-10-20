@@ -1,0 +1,86 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-4930106120442463430
+MonoBehaviour:
+  m_ObjectHideFlags: 11
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 10
+--- !u!21 &2100000
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: CloudsMat
+  m_Shader: {fileID: -6465566751694194690, guid: 9485846998702474392727069a7a65c7, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords: []
+  m_InvalidKeywords:
+  - _EMISSION
+  m_LightmapFlags: 2
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses:
+  - MOTIONVECTORS
+  m_LockedProperties: 
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _SampleTexture2D_040ab79212284a4985502ca935481eed_Texture_1_Texture2D:
+        m_Texture: {fileID: 2800000, guid: 56429388aef65e54a874776a5b791c1c, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SampleTexture2D_2dc42ecdbf0946b09d710d99b44991e7_Texture_1_Texture2D:
+        m_Texture: {fileID: 2800000, guid: cbe50142d34c6db40a35c3d4caf0f10c, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SampleTexture2D_be67ed0d57224a98849cf294f4a4bc83_Texture_1_Texture2D:
+        m_Texture: {fileID: 2800000, guid: a8c05e4f58190e94297098a1e229bb80, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SampleTexture2D_c96bbc08f9f14e85a63b9e4627723263_Texture_1_Texture2D:
+        m_Texture: {fileID: 2800000, guid: cbe50142d34c6db40a35c3d4caf0f10c, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SampleTexture2D_d14cca16610345adbb64a31d5435192d_Texture_1_Texture2D:
+        m_Texture: {fileID: 2800000, guid: 7cb6e855bf48d73468468db23a4413ca, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_Lightmaps:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_LightmapsInd:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_ShadowMasks:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
+    m_Floats:
+    - _QueueControl: 0
+    - _QueueOffset: 0
+    - _Tiling: 0.73
+    - _Transparency: 0.12
+    - _contrast: 1
+    - _smoothness: 0
+    m_Colors:
+    - _Color: {r: 0.9292453, g: 0.94308865, b: 1, a: 0}
+    - _Direction: {r: 0.05, g: 0, b: 0, a: 0}
+    - _Direction2: {r: -0.03, g: 0.02, b: 0, a: 0}
+  m_BuildTextureStacks: []
+  m_AllowLocking: 1
