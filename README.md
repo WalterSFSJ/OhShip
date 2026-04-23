@@ -31,20 +31,22 @@ The session is timed. When the clock hits zero, the player with the most points 
 
 | Start of Round | Mid-game hazards |
 |:-:|:-:|
-| ![Screenshot 1](docs/screenshot1.png) | ![Screenshot 2](docs/screenshot2.png) |
+| ![Screenshot 1](https://github.com/user-attachments/assets/aa91410b-2471-4658-bc76-ebc169bd9187) | ![Screenshot 2](https://github.com/user-attachments/assets/0a55a596-dcf4-420d-892b-bf2421f95dff) |
 
 | Scoring in action | Final seconds |
 |:-:|:-:|
-| ![Screenshot 3](docs/screenshot3.png) | ![Screenshot 4](docs/screenshot4.png) |
+| ![Screenshot 3](https://github.com/user-attachments/assets/0c5333ad-cd1e-495f-982a-177f8aa2975c) | ![Screenshot 4](https://github.com/user-attachments/assets/9e03b517-9c70-4c92-8032-088a0e15ffc5) |
 
 | Environmental event |
 |:-:|
-| ![Screenshot 5](docs/screenshot5.png) |
+| ![Screenshot 5](https://github.com/user-attachments/assets/e5900e6a-5e28-449c-9534-b62954821939) |
 
 ---
 
 ## 🛠️ Tech Stack
 
+| Tool | Details |
+|------|---------|
 | **Engine** | Unity (3D) |
 | **Language** | C# |
 | **Version Control** | Git / GitHub |
@@ -55,6 +57,8 @@ The session is timed. When the clock hits zero, the player with the most points 
 
 ## 👥 Team & Roles
 
+| Name | Role |
+|------|------|
 | **Sergi Naranjo** | Gameplay Programmer — character movement, minigame logic, UI systems, handicap/hazard systems, level blocking |
 | **Walter Scherk** | Multiplayer Programmer — 2-player input system, split input architecture |
 | **Lidia Ibáñez** | 3D Art & Environment |
